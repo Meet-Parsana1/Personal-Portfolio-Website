@@ -1,5 +1,37 @@
 
 document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle?.querySelector('i');
+
+    function applyTheme(theme) {
+        const isLight = theme === 'light';
+        document.documentElement.dataset.theme = theme;
+        themeToggle?.setAttribute('aria-label', `Switch to ${isLight ? 'dark' : 'light'} mode`);
+        themeToggle?.setAttribute('title', `Switch to ${isLight ? 'dark' : 'light'} mode`);
+        themeToggle?.setAttribute('aria-pressed', String(isLight));
+        if (themeIcon) themeIcon.className = `fa-solid ${isLight ? 'fa-moon' : 'fa-sun'}`;
+        
+        const themeColorMeta = document.getElementById('themeColorMeta');
+        if (themeColorMeta) {
+            themeColorMeta.setAttribute('content', isLight ? '#f5f3ff' : '#0b0b0b');
+        }
+        
+        window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+    }
+
+    const savedTheme = document.documentElement.dataset.theme;
+    applyTheme(savedTheme === 'light' ? 'light' : 'dark');
+
+    themeToggle?.addEventListener('click', () => {
+        const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        applyTheme(nextTheme);
+        try {
+            localStorage.setItem('portfolio-theme', nextTheme);
+        } catch (error) {
+            // Theme switching still works for this visit if storage is unavailable.
+        }
+    });
+
     const observerOptions = {
         root: null,
         rootMargin: '0px',
@@ -64,25 +96,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cursorDot = document.querySelector('[data-cursor-dot]');
     const cursorOutline = document.querySelector('[data-cursor-outline]');
+    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
-    window.addEventListener('mousemove', function (e) {
-        const posX = e.clientX;
-        const posY = e.clientY;
+    if (cursorDot && cursorOutline && !isTouchDevice) {
+        window.addEventListener('mousemove', function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
 
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
 
-        cursorOutline.animate({
-            left: `${posX}px`,
-            top: `${posY}px`
-        }, { duration: 500, fill: "forwards" });
-    });
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
 
-    const interactables = document.querySelectorAll('a, button, .floating-icon');
-    interactables.forEach(el => {
-        el.addEventListener('mouseenter', () => cursorOutline.classList.add('hovered'));
-        el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hovered'));
-    });
+        const interactables = document.querySelectorAll('a, button, .floating-icon');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hovered'));
+        });
+    }
 
     const timelineSections = document.querySelectorAll('.timeline');
 
@@ -153,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const aboutCard = document.querySelector('.glass-card');
     if (aboutCard) {
         aboutCard.addEventListener('mousemove', (e) => {
-
+            if (window.innerWidth <= 768 || window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
             if (!aboutCard.classList.contains('expanded')) return;
 
             const rect = aboutCard.getBoundingClientRect();
@@ -195,8 +230,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
+        const fields = {
+            name: contactForm.elements.name,
+            email: contactForm.elements.email,
+            message: contactForm.elements.message
+        };
+        const messageCount = document.getElementById('messageCount');
+        const contactStatus = document.getElementById('contactStatus');
+
+        const normalize = (value) => value.trim().replace(/\s+/g, ' ');
+        const validators = {
+            name(value) {
+                if (value.length < 2) return 'Enter at least 2 characters.';
+                if (value.length > 60) return 'Name must be 60 characters or fewer.';
+                if (!/^[\p{L}][\p{L}\s.'-]*$/u.test(value)) return 'Use letters, spaces, apostrophes, periods, or hyphens only.';
+                return '';
+            },
+            email(value) {
+                if (!value) return 'Enter your email address.';
+                if (value.length > 254) return 'Email address is too long.';
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) return 'Enter a valid email address.';
+                return '';
+            },
+            message(value) {
+                if (value.length < 20) return 'Please write at least 20 characters.';
+                if (value.length > 2000) return 'Message must be 2,000 characters or fewer.';
+                return '';
+            }
+        };
+
+        function setFieldState(field, error) {
+            const errorElement = document.getElementById(`${field.name}Error`);
+            const group = field.closest('.form-group');
+            errorElement.textContent = error;
+            field.setAttribute('aria-invalid', String(Boolean(error)));
+            group.classList.toggle('has-error', Boolean(error));
+            group.classList.toggle('is-valid', !error && field.value.trim().length > 0);
+        }
+
+        function validateField(field) {
+            const value = field.name === 'message' ? field.value.trim() : normalize(field.value);
+            const error = validators[field.name](value);
+            setFieldState(field, error);
+            return !error;
+        }
+
+        function updateMessageCount() {
+            messageCount.textContent = `${fields.message.value.length} / 2000`;
+        }
+
+        function setContactStatus(message, type = '') {
+            contactStatus.textContent = message;
+            contactStatus.className = `contact-status ${type}`;
+        }
+
+        Object.values(fields).forEach(field => {
+            field.addEventListener('blur', () => validateField(field));
+            field.addEventListener('input', () => {
+                if (field.name === 'message') updateMessageCount();
+                if (field.getAttribute('aria-invalid') === 'true') validateField(field);
+            });
+        });
+        updateMessageCount();
+
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
+
+            const formIsValid = Object.values(fields).every(validateField);
+            if (!formIsValid) {
+                const firstInvalidField = Object.values(fields).find(field => field.getAttribute('aria-invalid') === 'true');
+                firstInvalidField.focus();
+                if (window.soundSystem) window.soundSystem.playError();
+                return;
+            }
+
+            if (window.location.port !== '3000') {
+                setContactStatus('Start the site with “npm run serve”, then use http://localhost:3000 to send messages.', 'error');
+                if (window.soundSystem) window.soundSystem.playError();
+                return;
+            }
+
+            setContactStatus('');
 
             const btn = contactForm.querySelector('button');
             const originalText = btn.innerHTML;
@@ -205,8 +319,11 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.style.opacity = '0.7';
             btn.style.pointerEvents = 'none';
 
-            const formData = new FormData(contactForm);
-            const object = Object.fromEntries(formData);
+            const object = {
+                name: normalize(fields.name.value),
+                email: normalize(fields.email.value).toLowerCase(),
+                message: fields.message.value.trim()
+            };
 
             const json = JSON.stringify(object);
 
@@ -219,18 +336,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: json
             })
                 .then(async (response) => {
-                    let json = await response.json();
+                    const json = await response.json();
                     if (response.status == 200) {
 
                         btn.innerHTML = '<span>Message Delivered!</span> <i class="fa-solid fa-check"></i>';
                         btn.style.background = 'linear-gradient(90deg, #22c55e, #16a34a, #22c55e)';
                         btn.style.borderColor = '#4ade80';
                         contactForm.reset();
+                        updateMessageCount();
+                        Object.values(fields).forEach(field => setFieldState(field, ''));
+                        setContactStatus('Your message has been sent successfully.', 'success');
                         if (window.soundSystem) window.soundSystem.playSuccess();
                     } else {
 
                         btn.innerHTML = '<span>Error, Please Retry!</span> <i class="fa-solid fa-triangle-exclamation"></i>';
                         btn.style.background = 'linear-gradient(90deg, #ef4444, #dc2626, #ef4444)';
+                        setContactStatus(json.message || 'Unable to send your message. Check the terminal and try again.', 'error');
                         if (window.soundSystem) window.soundSystem.playError();
                     }
                 })
@@ -238,6 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     btn.innerHTML = '<span>Error!</span> <i class="fa-solid fa-triangle-exclamation"></i>';
                     btn.style.background = 'linear-gradient(90deg, #ef4444, #dc2626, #ef4444)';
+                    setContactStatus('Cannot reach the local contact server. Run “npm run serve” and open http://localhost:3000.', 'error');
                     if (window.soundSystem) window.soundSystem.playError();
                 })
                 .finally(() => {
@@ -276,6 +398,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         resumeModal.addEventListener('click', (e) => {
             if (e.target === resumeModal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && resumeModal.classList.contains('show')) {
                 closeModal();
             }
         });
@@ -539,12 +667,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', checkNavVisibility, { passive: true });
 
-    // ── Update indicator on resize ──
-    window.addEventListener('resize', () => {
-        heroHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
-        const activeLink = nav.querySelector('.nav-link.active');
-        updateIndicator(activeLink);
-    });
+    // ── Update indicator on resize & orientation change (debounced) ──
+    let resizeTimer;
+    function handleResize() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            heroHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
+            const activeLink = nav.querySelector('.nav-link.active');
+            updateIndicator(activeLink);
+        }, 100);
+    }
+    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('orientationchange', handleResize, { passive: true });
 
     // ── Smooth scroll on nav link click ──
     navLinks.forEach(link => {
