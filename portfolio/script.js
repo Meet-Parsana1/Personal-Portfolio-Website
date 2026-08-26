@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = themeToggle?.querySelector('i');
@@ -304,11 +303,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            if (window.location.port !== '3000') {
-                setContactStatus('Start the site with “npm run serve”, then use http://localhost:3000 to send messages.', 'error');
-                if (window.soundSystem) window.soundSystem.playError();
-                return;
-            }
+            // if (window.location.port !== '3000') {
+            //     setContactStatus('Start the site with “npm run serve”, then use http://localhost:3000 to send messages.', 'error');
+            //     if (window.soundSystem) window.soundSystem.playError();
+            //     return;
+            // }
 
             setContactStatus('');
 
