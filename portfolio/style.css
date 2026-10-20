@@ -488,6 +488,20 @@ body {
 
 }
 
+/* Lenis smooth-scroll integration */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
 
 
 .hero {
@@ -1879,31 +1893,88 @@ body {
 
 
 .back-to-top {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    --scroll-progress: 0%;
+    --back-to-top-surface: rgba(13, 10, 24, 0.92);
+    --scroll-track: rgba(168, 85, 247, 0.18);
+    background: conic-gradient(var(--accent-purple) 0 var(--scroll-progress), var(--scroll-track) var(--scroll-progress) 100%);
+    border: 0;
     color: var(--accent-purple);
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease, box-shadow 0.25s ease;
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    z-index: 10000;
+    padding: 3px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 18px rgba(168, 85, 247, 0.2);
+}
+
+.back-to-top::before {
+    content: '';
     position: absolute;
-    right: 0;
+    inset: 3px;
+    border-radius: inherit;
+    background: var(--back-to-top-surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+}
+
+.back-to-top i {
+    position: relative;
+    z-index: 1;
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .back-to-top:hover {
-    background: var(--accent-purple);
     color: #fff;
-    transform: translateY(-3px);
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4), 0 0 26px rgba(168, 85, 247, 0.55);
+}
+
+.back-to-top:hover::before {
+    background: var(--accent-purple);
     border-color: transparent;
 }
 
+.back-to-top:focus-visible {
+    outline: 3px solid rgba(216, 180, 254, 0.9);
+    outline-offset: 3px;
+}
+
 .back-to-top.bounce {
-    animation: bounce 2s infinite;
+    animation: none;
+}
+
+/* The floating button is available on every viewport, including below the footer. */
+@media (max-width: 768px) {
+    .back-to-top {
+        position: fixed !important;
+        right: 16px !important;
+        bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+        width: 46px !important;
+        height: 46px !important;
+        margin: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .back-to-top {
+        transition: none;
+    }
 }
 
 @keyframes bounce {
@@ -2509,12 +2580,11 @@ body {
 
 :root[data-theme='light'] .back-to-top {
     right: 16px;
-    background: rgba(255, 255, 255, 0.92);
-    border-color: rgba(91, 33, 182, 0.18);
+    --back-to-top-surface: rgba(255, 255, 255, 0.92);
+    --scroll-track: rgba(124, 58, 237, 0.22);
 }
 
 :root[data-theme='light'] .back-to-top:hover {
-    background: var(--accent-purple);
     color: #fff;
 }
 

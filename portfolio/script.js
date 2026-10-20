@@ -1,4 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (window.Lenis && !prefersReducedMotion) {
+        const lenis = new Lenis({
+            duration: 1.15,
+            easing: (t) => 1 - Math.pow(1 - t, 4),
+            smoothWheel: true,
+            syncTouch: false,
+            anchors: true,
+            autoRaf: false,
+            allowNestedScroll: true
+        });
+
+        window.lenis = lenis;
+        lenis.on('scroll', () => window.ScrollTrigger?.update());
+
+        if (window.gsap) {
+            gsap.ticker.add((time) => lenis.raf(time * 1000));
+            gsap.ticker.lagSmoothing(0);
+        } else {
+            const raf = (time) => {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            };
+            requestAnimationFrame(raf);
+        }
+    }
+
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = themeToggle?.querySelector('i');
 
@@ -9,12 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggle?.setAttribute('title', `Switch to ${isLight ? 'dark' : 'light'} mode`);
         themeToggle?.setAttribute('aria-pressed', String(isLight));
         if (themeIcon) themeIcon.className = `fa-solid ${isLight ? 'fa-moon' : 'fa-sun'}`;
-        
+
         const themeColorMeta = document.getElementById('themeColorMeta');
         if (themeColorMeta) {
             themeColorMeta.setAttribute('content', isLight ? '#f5f3ff' : '#0b0b0b');
         }
-        
+
         window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
     }
 
@@ -169,19 +197,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (backToTopBtn) {
         backToTopBtn.addEventListener('click', () => {
+            if (window.lenis) {
+                window.lenis.scrollTo(0, { duration: 1.15 });
+                return;
+            }
+
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
         });
 
-        window.addEventListener('scroll', () => {
-            if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50) {
-                backToTopBtn.classList.add('bounce');
-            } else {
-                backToTopBtn.classList.remove('bounce');
-            }
-        });
+        const updateBackToTop = () => {
+            const scrollingElement = document.scrollingElement || document.documentElement;
+            const scrollableHeight = scrollingElement.scrollHeight - scrollingElement.clientHeight;
+            const hasReachedBottom = scrollingElement.scrollTop + scrollingElement.clientHeight >= scrollingElement.scrollHeight - 2;
+            const progress = hasReachedBottom ? 100 : (scrollableHeight > 0 ? (scrollingElement.scrollTop / scrollableHeight) * 100 : 0);
+            const scrollProgress = Math.min(100, Math.max(0, progress));
+
+            backToTopBtn.style.setProperty('--scroll-progress', `${scrollProgress}%`);
+            backToTopBtn.classList.toggle('is-visible', scrollingElement.scrollTop > 0);
+            backToTopBtn.setAttribute('aria-label', `Back to top — ${Math.round(scrollProgress)}% scrolled`);
+        };
+
+        window.addEventListener('scroll', updateBackToTop, { passive: true });
+        updateBackToTop();
     }
 
     const aboutCard = document.querySelector('.glass-card');
@@ -303,12 +343,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // if (window.location.port !== '3000') {
-            //     setContactStatus('Start the site with “npm run serve”, then use http://localhost:3000 to send messages.', 'error');
-            //     if (window.soundSystem) window.soundSystem.playError();
-            //     return;
-            // }
-
             setContactStatus('');
 
             const btn = contactForm.querySelector('button');
@@ -384,11 +418,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e) e.preventDefault();
             resumeModal.classList.add('show');
             document.body.style.overflow = 'hidden';
+            window.lenis?.stop();
         };
 
         const closeModal = () => {
             resumeModal.classList.remove('show');
             document.body.style.overflow = 'auto';
+            window.lenis?.start();
         };
 
         if (openResumeBtn) openResumeBtn.addEventListener('click', openModal);
