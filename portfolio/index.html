@@ -1,822 +1,785 @@
 <!doctype html>
 <html lang="en">
-      <head>
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-            <!-- Mobile browser chrome color — dark theme default -->
-            <meta name="theme-color" content="#0b0b0b" id="themeColorMeta" />
-            <meta name="apple-mobile-web-app-capable" content="yes" />
-            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-            <title>Meet's Portfolio</title>
-            <meta
-                  name="description"
-                  content="Meet Parsana — B.Sc. IT (FinTech) student, developer, and technology enthusiast exploring software development, AI, FinTech, and problem solving."
-            />
+<head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-            <!-- Open Graph SEO -->
-            <meta property="og:type" content="website" />
-            <meta property="og:title" content="Meet" />
-            <meta property="og:description" content="Explore my projects, work experience, and technical skills." />
-            <meta property="og:image" content="portfolio_assests/Meet_Parsana_Profile.png" />
+      <!-- Mobile browser chrome color — dark theme default -->
+      <meta name="theme-color" content="#0b0b0b" id="themeColorMeta" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      <title>Meet's Portfolio</title>
+      <meta name="description"
+            content="Meet Parsana — B.Sc. IT (FinTech) student, developer, and technology enthusiast exploring software development, AI, FinTech, and problem solving." />
 
-            <link rel="icon" href="portfolio_assests/Meet_Parsana_Profile.png" type="image/png" />
-            <link rel="stylesheet" href="style.css" />
-            <link
-                  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap"
-                  rel="stylesheet"
-            />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-            <link
-                  rel="stylesheet"
-                  type="text/css"
-                  href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
-            />
-            <script>
-                  try {
-                        const savedTheme = localStorage.getItem('portfolio-theme');
-                        if (savedTheme === 'light' || savedTheme === 'dark') {
-                              document.documentElement.dataset.theme = savedTheme;
-                        }
-                  } catch (error) {
-                        // The portfolio remains usable if browser storage is unavailable.
+      <!-- Open Graph SEO -->
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="Meet" />
+      <meta property="og:description" content="Explore my projects, work experience, and technical skills." />
+      <meta property="og:image" content="portfolio_assests/Meet_Parsana_Profile.png" />
+
+      <link rel="icon" href="portfolio_assests/Meet_Parsana_Profile.png" type="image/png" />
+      <link rel="stylesheet" href="style.css" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+      <link rel="stylesheet" type="text/css"
+            href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+      <script>
+            try {
+                  const savedTheme = localStorage.getItem("portfolio-theme");
+                  if (savedTheme === "light" || savedTheme === "dark") {
+                        document.documentElement.dataset.theme = savedTheme;
                   }
-            </script>
-      </head>
+            } catch (error) {
+                  // The portfolio remains usable if browser storage is unavailable.
+            }
+      </script>
+</head>
 
-      <body>
-            <!-- Scroll Progress Bar -->
-            <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+<body>
+      <!-- Scroll Progress Bar -->
+      <div class="scroll-progress-bar" id="scrollProgressBar"></div>
 
-            <!-- ── Floating Navbar ── -->
-            <nav class="site-nav" id="siteNav">
-                  <div class="nav-pill">
-                        <span class="nav-indicator" id="navIndicator"></span>
-                        <a href="#home" class="nav-link active" data-section="home">
-                              <i class="fa-solid fa-house nav-icon"></i>
-                              <span class="nav-label">Home</span>
-                        </a>
-                        <a href="#about" class="nav-link" data-section="about">
-                              <i class="fa-solid fa-user nav-icon"></i>
-                              <span class="nav-label">About</span>
-                        </a>
-                        <a href="#experience" class="nav-link" data-section="experience">
-                              <i class="fa-solid fa-briefcase nav-icon"></i>
-                              <span class="nav-label">Experience</span>
-                        </a>
-                        <a href="#projects" class="nav-link" data-section="projects">
-                              <i class="fa-solid fa-code nav-icon"></i>
-                              <span class="nav-label">Projects</span>
-                        </a>
-                        <a href="#skills" class="nav-link" data-section="skills">
-                              <i class="fa-solid fa-layer-group nav-icon"></i>
-                              <span class="nav-label">Skills</span>
-                        </a>
-                        <a href="#certifications" class="nav-link" data-section="certifications">
-                              <i class="fa-solid fa-award nav-icon"></i>
-                              <span class="nav-label">Certs</span>
-                        </a>
-                        <a href="#profiles" class="nav-link" data-section="profiles">
-                              <i class="fa-solid fa-globe nav-icon"></i>
-                              <span class="nav-label">Profiles</span>
-                        </a>
-                        <a href="#contact" class="nav-link" data-section="contact">
-                              <i class="fa-solid fa-envelope nav-icon"></i>
-                              <span class="nav-label">Contact</span>
-                        </a>
+      <!-- ── Floating Navbar ── -->
+      <nav class="site-nav" id="siteNav">
+            <div class="nav-pill">
+                  <span class="nav-indicator" id="navIndicator"></span>
+                  <a href="#home" class="nav-link active" data-section="home">
+                        <i class="fa-solid fa-house nav-icon"></i>
+                        <span class="nav-label">Home</span>
+                  </a>
+                  <a href="#about" class="nav-link" data-section="about">
+                        <i class="fa-solid fa-user nav-icon"></i>
+                        <span class="nav-label">About</span>
+                  </a>
+                  <a href="#experience" class="nav-link" data-section="experience">
+                        <i class="fa-solid fa-briefcase nav-icon"></i>
+                        <span class="nav-label">Experience</span>
+                  </a>
+                  <a href="#projects" class="nav-link" data-section="projects">
+                        <i class="fa-solid fa-code nav-icon"></i>
+                        <span class="nav-label">Projects</span>
+                  </a>
+                  <a href="#skills" class="nav-link" data-section="skills">
+                        <i class="fa-solid fa-layer-group nav-icon"></i>
+                        <span class="nav-label">Skills</span>
+                  </a>
+                  <a href="#certifications" class="nav-link" data-section="certifications">
+                        <i class="fa-solid fa-award nav-icon"></i>
+                        <span class="nav-label">Certs</span>
+                  </a>
+                  <a href="#profiles" class="nav-link" data-section="profiles">
+                        <i class="fa-solid fa-globe nav-icon"></i>
+                        <span class="nav-label">Profiles</span>
+                  </a>
+                  <a href="#contact" class="nav-link" data-section="contact">
+                        <i class="fa-solid fa-envelope nav-icon"></i>
+                        <span class="nav-label">Contact</span>
+                  </a>
+            </div>
+      </nav>
+
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode"
+            title="Switch to light mode">
+            <i class="fa-solid fa-sun" aria-hidden="true"></i>
+      </button>
+
+      <!-- ── Preloader: Boot Sequence ── -->
+      <div class="preloader" id="preloader">
+            <div class="preloader-particles" id="preloaderParticles"></div>
+
+            <!-- Branding -->
+            <div class="preloader-brand">
+                  <div class="preloader-brand-main">
+                        <span class="preloader-brand-name">Meet</span><span
+                              class="preloader-brand-accent">Parsana</span>
                   </div>
-            </nav>
-
-            <button
-                  class="theme-toggle"
-                  id="themeToggle"
-                  type="button"
-                  aria-label="Switch to light mode"
-                  title="Switch to light mode"
-            >
-                  <i class="fa-solid fa-sun" aria-hidden="true"></i>
-            </button>
-
-            <!-- ── Preloader: Boot Sequence ── -->
-            <div class="preloader" id="preloader">
-                  <div class="preloader-particles" id="preloaderParticles"></div>
-
-                  <!-- Branding -->
-                  <div class="preloader-brand">
-                        <div class="preloader-brand-main">
-                              <span class="preloader-brand-name">Meet</span
-                              ><span class="preloader-brand-accent">Parsana</span>
-                        </div>
-                        <div class="preloader-brand-subtitle">
-                              <span class="subtitle-line"></span>
-                              <span>Personal Portfolio</span>
-                              <span class="subtitle-line"></span>
-                        </div>
-                  </div>
-
-                  <!-- Sleek Loading Bar -->
-                  <div class="preloader-sleek-track">
-                        <div class="preloader-sleek-fill" id="preloaderSleekFill"></div>
-                  </div>
-
-                  <!-- Cycling Tagline -->
-                  <div class="preloader-tagline">
-                        <span class="tagline-word" style="--w: 0">Ideate.</span>
-                        <span class="tagline-word" style="--w: 1">Design.</span>
-                        <span class="tagline-word" style="--w: 2">Develop.</span>
-                        <span class="tagline-word" style="--w: 3">Innovate.</span>
+                  <div class="preloader-brand-subtitle">
+                        <span class="subtitle-line"></span>
+                        <span>Personal Portfolio</span>
+                        <span class="subtitle-line"></span>
                   </div>
             </div>
 
-            <div class="cursor-dot" data-cursor-dot></div>
-            <div class="cursor-outline" data-cursor-outline></div>
-
-            <div class="background-container">
-                  <canvas id="bg-canvas"></canvas>
+            <!-- Sleek Loading Bar -->
+            <div class="preloader-sleek-track">
+                  <div class="preloader-sleek-fill" id="preloaderSleekFill"></div>
             </div>
 
-            <main class="hero" id="home">
-                  <div class="floating-icon icon-top-left">
-                        <i class="fa-solid fa-code"></i>
-                  </div>
-                  <div class="floating-icon icon-top-right">
-                        <i class="fa-solid fa-brain"></i>
-                  </div>
-                  <div class="floating-icon icon-bottom-left">
-                        <i class="fa-solid fa-trophy"></i>
-                  </div>
-                  <div class="floating-icon icon-bottom-right">
-                        <i class="fa-regular fa-lightbulb"></i>
-                  </div>
+            <!-- Cycling Tagline -->
+            <div class="preloader-tagline">
+                  <span class="tagline-word" style="--w: 0">Ideate.</span>
+                  <span class="tagline-word" style="--w: 1">Design.</span>
+                  <span class="tagline-word" style="--w: 2">Develop.</span>
+                  <span class="tagline-word" style="--w: 3">Innovate.</span>
+            </div>
+      </div>
 
-                  <div class="content-wrapper">
-                        <h2 class="sub-title">Woah! You Landed on the Portfolio Website of The</h2>
-                        <br />
-                        <br />
-                        <h1 class="main-title">
-                              <span class="purple-text" id="typing-text"></span>
-                        </h1>
-                        <br />
-                        <br />
-                        <h5 class="year">Meet Parsana | Final Year Bsc. IT(FinTech) student</h5>
-                        <br />
-                        <div class="hero-buttons">
-                              <a href="https://www.linkedin.com/in/meet-parsana/" target="_blank" class="btn-resume"
-                                    >Let's Connect</a
-                              >
-                              <a href="https://drive.google.com/file/d/1bq8ZYGti_gXV2qTRGiueYkpMp6mDKOUD/view?usp=sharing" id="openResumeBtn" class="btn-resume">View Resume</a>
-                        </div>
-                  </div>
-            </main>
+      <div class="cursor-dot" data-cursor-dot></div>
+      <div class="cursor-outline" data-cursor-outline></div>
 
-            <section class="about-section" id="about">
-                  <div class="glass-card scroll-reveal">
-                        <h2>About Me - <span class="purple-text">Behind The Code!</span></h2>
-                        <p>
-                              I'm currently pursuing a <strong>B.Sc. in Information Technology (FinTech)</strong> at
-                              <strong>Marwadi University, Rajkot</strong>. Every day, I'm working on building stronger
-                              programming fundamentals and becoming the kind of developer who understands not just
-                              <em>how</em> to code, but <em>why</em> a solution works.
+      <div class="background-container">
+            <canvas id="bg-canvas"></canvas>
+      </div>
 
-                              <br /><br />The part of programming I enjoy the most is <strong>logic building</strong>. I
-                              like taking a problem, breaking it into smaller pieces, and figuring out the most
-                              efficient way to solve it. That's what keeps me interested in coding and motivates me to
-                              keep learning. Right now, I'm focused on improving my skills in
-                              <strong>Data Structures &amp; Algorithms, Object-Oriented Programming, and Python</strong
-                              >.
+      <main class="hero" id="home">
+            <div class="floating-icon icon-top-left">
+                  <i class="fa-solid fa-code"></i>
+            </div>
+            <div class="floating-icon icon-top-right">
+                  <i class="fa-solid fa-brain"></i>
+            </div>
+            <div class="floating-icon icon-bottom-left">
+                  <i class="fa-solid fa-trophy"></i>
+            </div>
+            <div class="floating-icon icon-bottom-right">
+                  <i class="fa-regular fa-lightbulb"></i>
+            </div>
 
-                              <br /><br />I'm also exploring <strong>Artificial Intelligence</strong>, especially
-                              <strong>AI Prompt Engineering</strong>. I enjoy learning how to communicate with AI tools
-                              effectively and using them to speed up learning, brainstorm ideas, and solve problems. To
-                              me, AI isn't here to replace developers; it's a tool that helps us build better and learn
-                              faster.
-
-                              <br /><br />Studying <strong>FinTech</strong> has introduced me to the connection between
-                              technology and finance. Learning about banking systems and financial technologies has
-                              helped me understand how software can solve real-world challenges beyond traditional
-                              applications.
-
-                              <br /><br />One thing I believe is that growth comes from <strong>consistency</strong>. I
-                              don't try to learn everything at once. Instead, I focus on improving a little every day,
-                              strengthening my fundamentals, and staying curious about new technologies.
-
-                              <br /><br />Outside of coding, I enjoy playing <strong>chess</strong>. It has taught me
-                              patience, strategic thinking, and the importance of planning a few moves
-                              ahead&mdash;skills that naturally influence the way I approach programming and
-                              problem-solving.
-
-                              <br /><br />I'm still learning, still building, and always looking for opportunities to
-                              challenge myself. Every project teaches me something new, and every line of code brings me
-                              one step closer to becoming the developer I aspire to be.
-                        </p>
-                  </div>
-            </section>
-
-            <br />
-
-            <section class="projects-section" id="experience">
-                  <h2 class="section-title">
-                        Work Experience - <span class="purple-text">Professional Journey!</span>
+            <div class="content-wrapper">
+                  <h2 class="sub-title">
+                        Woah! You Landed on the Portfolio Website of The
                   </h2>
                   <br />
-                  <div class="timeline">
-                        <div class="timeline-line">
-                              <div class="timeline-progress"></div>
-                        </div>
-
-                        <div class="timeline-item left">
-                              <div class="timeline-number">01</div>
-                              <div class="timeline-content">
-                                    <div class="project-tag">CodeNeuraX Tech Community</div>
-                                    <img
-                                          src="portfolio_assests/CodeNeuraX_Icon.png"
-                                          alt="CodeNeuraX Logo"
-                                          class="company-logo"
-                                          loading="lazy"
-                                          decoding="async"
-                                    />
-                                    <h3>Technical Team Member</h3>
-                                    <p style="text-align: left; padding: 10px 0">
-                                          &bull; Collaborated with core team members to develop innovative solutions and contribute to technical projects.<br /><br />
-                                          &bull; Assisted in planning and organizing workshops, hackathons, and community events.<br /><br />
-                                          &bull; Explored emerging technologies and strengthened my technical knowledge through hands-on learning.<br /><br />
-                                          &bull; Worked with the team on practical projects that encouraged innovation, collaboration, and real-world problem-solving.
-                                    </p>
-                              </div>
-                              <div class="timeline-date">JAN 2026 &ndash; SEP 2026</div>
-                              <div class="timeline-dot"></div>
-                        </div>
-                  </div>
-            </section>
-
-            <br />
-
-            <section class="projects-section" id="projects">
-                  <h2 class="section-title">Projects Showcase - <span class="purple-text">What I've Built!</span></h2>
                   <br />
-                  <div class="experience-grid projects-grid">
-                        <article class="experience-card project-showcase-card finance-project">
-                              <div class="project-card-meta">
-                                    <span class="project-tag">Capstone Project</span>
-                                    <span class="project-tech-label">MERN + AI</span>
-                              </div>
-                              <figure class="project-preview">
-                                    <img
-                                          src="portfolio_assests/finance-intelligence-preview.png"
-                                          alt="Finance Intelligence dashboard interface"
-                                          loading="lazy"
-                                          decoding="async"
-                                    />
-                              </figure>
-                              <div class="project-card-content">
-                                    <h3>Finance Intelligence: AI-Driven Personal Finance Intelligence</h3>
-                                    <p>
-                                          A role-aware financial platform that brings expense tracking, personal analytics,
-                                          and AI-assisted insights into one focused dashboard experience.
-                                    </p>
-                                    <ul class="project-highlights" aria-label="Finance Intelligence highlights">
-                                          <li><i class="fa-solid fa-table-columns" aria-hidden="true"></i> Role-based dashboards</li>
-                                          <li><i class="fa-solid fa-wallet" aria-hidden="true"></i> Expense tracking</li>
-                                          <li><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> AI-assisted insights</li>
-                                    </ul>
-                                    <div class="project-stack" aria-label="Technology stack">
-                                          <span>MERN</span>
-                                          <span>AI-assisted insights</span>
-                                          <span>Analytics</span>
-                                    </div>
-                              </div>
-                              <div class="project-links-wrapper">
-                                    <a
-                                          href="https://finance-intelligence-xi.vercel.app/"
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          class="project-btn primary-btn"
-                                          ><i class="fa-regular fa-eye" aria-hidden="true"></i> Live Demo</a
-                                    >
-                                    <a
-                                          href="https://github.com/Meet-Parsana1/Finance-Intelligence"
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          class="project-btn project-github-btn"
-                                          ><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a
-                                    >
-                              </div>
-                        </article>
-
-                        <article class="experience-card project-showcase-card canteen-project">
-                              <div class="project-card-meta">
-                                    <span class="project-tag">Full-Stack Project</span>
-                                    <span class="project-tech-label">MERN + JWT</span>
-                              </div>
-                              <figure class="project-preview">
-                                    <img
-                                          src="portfolio_assests/canteeniq-preview.png"
-                                          alt="CanteenIQ feedback analytics dashboard interface"
-                                          loading="lazy"
-                                          decoding="async"
-                                    />
-                              </figure>
-                              <div class="project-card-content">
-                                    <h3>CanteenIQ: Canteen Feedback Intelligence</h3>
-                                    <p>
-                                          A multi-tenant feedback platform that gives canteens secure QR-based collection,
-                                          isolated operations, and actionable analytics for better dining experiences.
-                                    </p>
-                                    <ul class="project-highlights" aria-label="CanteenIQ highlights">
-                                          <li><i class="fa-solid fa-qrcode" aria-hidden="true"></i> QR-based feedback collection</li>
-                                          <li><i class="fa-solid fa-building-shield" aria-hidden="true"></i> Multi-tenant isolation</li>
-                                          <li><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Feedback analytics</li>
-                                    </ul>
-                                    <div class="project-stack" aria-label="Technology stack">
-                                          <span>MERN</span>
-                                          <span>JWT</span>
-                                          <span>Multi-tenant architecture</span>
-                                    </div>
-                              </div>
-                              <div class="project-links-wrapper">
-                                    <a
-                                          href="https://canteen-feedback-management-system.vercel.app/"
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          class="project-btn primary-btn"
-                                          ><i class="fa-regular fa-eye" aria-hidden="true"></i> Live Demo</a
-                                    >
-                                    <a
-                                          href="https://github.com/Meet-Parsana1/Canteen-Feedback-Management-System"
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          class="project-btn project-github-btn"
-                                          ><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a
-                                    >
-                              </div>
-                        </article>
-                  </div>
-            </section>
-
-            <br />
-
-            <section class="skills-section" id="skills">
-                  <h2 class="section-title">Technical Skills - <span class="purple-text">Core Expertise!</span></h2>
-
-                  <div class="skill-filters" id="skillFilters">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="languages">Languages</button>
-                        <button class="filter-btn" data-filter="frontend">Frontend</button>
-                        <button class="filter-btn" data-filter="backend">Backend</button>
-                        <button class="filter-btn" data-filter="databases">Databases</button>
-                        <button class="filter-btn" data-filter="tools">Tools</button>
-                  </div>
-
-                  <div class="skill-grid" id="skillGrid">
-                        <div class="skill-card" data-category="languages">
-                              <i class="devicon-c-plain colored"></i>
-                              <span>C</span>
-                        </div>
-                        <div class="skill-card" data-category="languages">
-                              <i class="devicon-cplusplus-plain colored"></i>
-                              <span>C++</span>
-                        </div>
-                        <div class="skill-card" data-category="languages">
-                              <i class="devicon-javascript-plain colored"></i>
-                              <span>JS</span>
-                        </div>
-                        <div class="skill-card" data-category="languages">
-                              <i class="fa-brands fa-python" style="color: #3776ab"></i>
-                              <span>Python</span>
-                        </div>
-                        <div class="skill-card" data-category="frontend">
-                              <i class="devicon-html5-plain colored"></i>
-                              <span>HTML5</span>
-                        </div>
-                        <div class="skill-card" data-category="frontend">
-                              <i class="devicon-css3-plain colored"></i>
-                              <span>CSS3</span>
-                        </div>
-                        <div class="skill-card" data-category="frontend">
-                              <i class="devicon-react-original colored"></i>
-                              <span>React.js</span>
-                        </div>
-                        <div class="skill-card" data-category="backend">
-                              <i class="devicon-nodejs-plain-wordmark colored"></i>
-                              <span>Node.js</span>
-                        </div>
-                        <div class="skill-card" data-category="backend">
-                              <i class="devicon-express-original"></i>
-                              <span>Express.js</span>
-                        </div>
-                        <div class="skill-card" data-category="databases">
-                              <i class="devicon-mysql-plain colored"></i>
-                              <span>MySQL</span>
-                        </div>
-                        <div class="skill-card" data-category="databases">
-                              <i class="devicon-mongodb-plain colored"></i>
-                              <span>MongoDB</span>
-                        </div>
-                        <div class="skill-card" data-category="tools">
-                              <i class="devicon-git-plain colored"></i>
-                              <span>Git</span>
-                        </div>
-                        <div class="skill-card" data-category="tools">
-                              <i class="devicon-github-original"></i>
-                              <span>GitHub</span>
-                        </div>
-                        <div class="skill-card" data-category="tools">
-                              <i class="devicon-postman-plain colored"></i>
-                              <span>Postman</span>
-                        </div>
-                        <div class="skill-card" data-category="tools">
-                              <i class="devicon-vercel-original"></i>
-                              <span>Vercel</span>
-                        </div>
-                  </div>
-            </section>
-
-            <section class="certifications-section" id="certifications">
-                  <h2 class="section-title">Certifications - <span class="purple-text">Learning Milestones!</span></h2>
-
-                  <div class="cert-grid">
-                        <div class="cert-item">
-                              <div class="cert-img-wrapper">
-                                    <img
-                                          src="portfolio_assests/Empathy_Encryption_Hackathon_Certificate.png"
-                                          alt="Empathy Encryption Hackathon certificate"
-                                          loading="lazy"
-                                          decoding="async"
-                                    />
-                                    <div class="cert-overlay">
-                                          <a
-                                                href="https://drive.google.com/file/d/1u2S2udtZN5Kvm9lWprThZH8fuBOqb69Y/view?usp=sharing"
-                                                target="_blank"
-                                                class="cert-overlay-link"
-                                          >
-                                                <span>View Credentials</span>
-                                                <i class="fa-solid fa-arrow-right-long"></i>
-                                          </a>
-                                    </div>
-                              </div>
-                              <div class="cert-info">
-                                    <h3>Empathy Encryption Hackathon</h3>
-                                    <p>
-                                          Participated in the <strong>Empathy Encryption Hackathon</strong>,
-                                          collaborating to build a
-                                          <strong>Python-based Password Strength Checker</strong> that validated
-                                          passwords against predefined security requirements. Worked on applying
-                                          programming logic to solve a practical cybersecurity challenge within a
-                                          competitive environment. The experience strengthened problem-solving,
-                                          teamwork, rapid prototyping, and the ability to develop solutions under time
-                                          constraints.
-                                    </p>
-                              </div>
-                        </div>
-
-                        <div class="cert-item">
-                              <div class="cert-img-wrapper">
-                                    <img
-                                          src="portfolio_assests/Introduction_to_Prompt_Engineering_Certificate.png"
-                                          alt="Introduction to Prompt Engineering certificate"
-                                          loading="lazy"
-                                          decoding="async"
-                                    />
-                                    <div class="cert-overlay">
-                                          <a
-                                                href="https://drive.google.com/file/d/1bIuWYCXAh7ekIRrwp-2jVr5wd7MAkCKk/view?usp=sharing"
-                                                target="_blank"
-                                                class="cert-overlay-link"
-                                          >
-                                                <span>View Credentials</span>
-                                                <i class="fa-solid fa-arrow-right-long"></i>
-                                          </a>
-                                    </div>
-                              </div>
-                              <div class="cert-info">
-                                    <h3>Introduction to Prompt Engineering</h3>
-                                    <p>
-                                          Completed a practical course on <strong>Prompt Engineering</strong>, learning
-                                          how to communicate effectively with AI systems to produce accurate, relevant,
-                                          and high-quality outputs. Explored prompt design techniques through hands-on
-                                          exercises and real-world scenarios, understanding how structured instructions
-                                          significantly improve AI responses. Developed practical skills that enhance
-                                          productivity, accelerate learning, and support efficient software development
-                                          workflows.
-                                    </p>
-                              </div>
-                        </div>
-
-                        <div class="cert-item">
-                              <div class="cert-img-wrapper">
-                                    <img
-                                          src="portfolio_assests/SQL_for_Beginners_Certificate.png"
-                                          alt="SQL for Beginners certificate"
-                                          loading="lazy"
-                                          decoding="async"
-                                    />
-                                    <div class="cert-overlay">
-                                          <a
-                                                href="https://drive.google.com/file/d/1M8LwrGnfHnQU6G9HOXkdiZdui-IZo6-0/view?usp=sharing"
-                                                target="_blank"
-                                                class="cert-overlay-link"
-                                          >
-                                                <span>View Credentials</span>
-                                                <i class="fa-solid fa-arrow-right-long"></i>
-                                          </a>
-                                    </div>
-                              </div>
-                              <div class="cert-info">
-                                    <h3>SQL for Beginners</h3>
-                                    <p>
-                                          Completed a comprehensive SQL learning program covering relational databases,
-                                          MySQL, and database design concepts. Strengthened practical skills by writing
-                                          queries to retrieve, filter, sort, join, and manipulate data while
-                                          successfully completing the course assessments. Built a solid foundation in
-                                          database management and learned how structured data powers modern software
-                                          applications.
-                                    </p>
-                              </div>
-                        </div>
-
-                        <div class="cert-item">
-                              <div class="cert-img-wrapper">
-                                    <img
-                                          src="portfolio_assests/C_Programming_Mastery_Certificate.png"
-                                          alt="C Programming certificate"
-                                          loading="lazy"
-                                          decoding="async"
-                                    />
-                                    <div class="cert-overlay">
-                                          <a
-                                                href="https://drive.google.com/file/d/1vxIf5nX-Anp53UQ13GH6RGBXopY1ld95/view?usp=sharing"
-                                                target="_blank"
-                                                class="cert-overlay-link"
-                                          >
-                                                <span>View Credentials</span>
-                                                <i class="fa-solid fa-arrow-right-long"></i>
-                                          </a>
-                                    </div>
-                              </div>
-                              <div class="cert-info">
-                                    <h3>C Programming Mastery</h3>
-                                    <p>
-                                          Successfully completed an intensive C Programming certification, demonstrating
-                                          a strong understanding of programming fundamentals and problem-solving
-                                          techniques. Achieved an outstanding <strong>93/100</strong> score in the final
-                                          assessment, reflecting both conceptual clarity and coding proficiency. Gained
-                                          hands-on experience with variables, loops, functions, arrays, pointers, and
-                                          memory management while strengthening logical thinking and debugging skills.
-                                    </p>
-                              </div>
-                        </div>
-                  </div>
-            </section>
-
-            <br />
-
-            <section class="profiles-section" id="profiles">
-                  <h2 class="section-title">Web Presence - <span class="purple-text">Dev Network!</span></h2>
-                  <div class="profile-header">
-                        <div class="profile-img-main">
-                              <img
-                                    src="portfolio_assests/Meet_Parsana_Profile.png"
-                                    alt="Meet Parsana"
-                                    loading="lazy"
-                                    decoding="async"
-                              />
-                        </div>
-                        <div class="profile-text">
-                              <p class="purple-text">@MEETPARSANA</p>
-                        </div>
-                  </div>
-
-                  <div class="profiles-grid">
-                        <a
-                              href="https://www.linkedin.com/in/meet-parsana/"
-                              target="_blank"
-                              class="profile-card"
-                              aria-label="LinkedIn Profile"
-                        >
-                              <div class="profile-icon">
-                                    <i class="fa-brands fa-linkedin" style="color: #0077b5"></i>
-                              </div>
-                              <div class="profile-info">
-                                    <h3>LinkedIn</h3>
-                                    <p>Connect</p>
-                              </div>
-                        </a>
-
-                        <a
-                              href="https://github.com/Meet-Parsana1"
-                              target="_blank"
-                              class="profile-card"
-                              aria-label="GitHub Profile"
-                        >
-                              <div class="profile-icon">
-                                    <i class="fa-brands fa-github"></i>
-                              </div>
-                              <div class="profile-info">
-                                    <h3>GitHub</h3>
-                                    <p>Commit</p>
-                              </div>
-                        </a>
-
-                        <a
-                              href="https://leetcode.com/u/Meet_Parsana_/"
-                              target="_blank"
-                              class="profile-card"
-                              aria-label="LeetCode Profile"
-                        >
-                              <div class="profile-icon">
-                                    <i class="devicon-leetcode-plain colored"></i>
-                              </div>
-                              <div class="profile-info">
-                                    <h3>LeetCode</h3>
-                                    <p>Compete</p>
-                              </div>
-                        </a>
-
-                        <a
-                              href="https://www.instagram.com/meet_parsana_01/"
-                              target="_blank"
-                              class="profile-card"
-                              aria-label="Instagram Profile"
-                        >
-                              <div class="profile-icon">
-                                    <i class="fa-brands fa-instagram" style="color: #e4405f"></i>
-                              </div>
-                              <div class="profile-info">
-                                    <h3>Instagram</h3>
-                                    <p>Follow</p>
-                              </div>
-                        </a>
-                  </div>
+                  <h1 class="main-title">
+                        <span class="purple-text" id="typing-text"></span>
+                  </h1>
                   <br />
-                  <p class="profile-note">You can explore further by clicking on any of the profile cards above!</p>
-            </section>
+                  <br />
+                  <h5 class="year">Meet Parsana | Final Year B.Sc IT(FinTech) Student</h5>
+                  <br />
+                  <div class="hero-buttons">
+                        <a href="https://www.linkedin.com/in/meet-parsana/" target="_blank" class="btn-resume">Let's
+                              Connect</a>
+                        <a href="https://drive.google.com/file/d/1SOv1T2H3UToDvL3g3Fss-FRgv_0tpWYU/view?usp=sharing"
+                              id="openResumeBtn" class="btn-resume">View Resume</a>
+                  </div>
+            </div>
+      </main>
 
+      <section class="about-section" id="about">
+            <div class="glass-card scroll-reveal">
+                  <h2>About Me - <span class="purple-text">Behind The Code!</span></h2>
+                  <p>
+                        I'm currently pursuing a
+                        <strong>B.Sc. in Information Technology (FinTech)</strong> at
+                        <strong>Marwadi University, Rajkot</strong>. Every day, I'm working on
+                        building stronger programming fundamentals and becoming the kind of
+                        developer who understands not just <em>how</em> to code, but
+                        <em>why</em> a solution works.
+
+                        <br /><br />The part of programming I enjoy the most is
+                        <strong>logic building</strong>. I like taking a problem, breaking it
+                        into smaller pieces, and figuring out the most efficient way to solve
+                        it. That's what keeps me interested in coding and motivates me to keep
+                        learning. Right now, I'm focused on improving my skills in
+                        <strong>Data Structures &amp; Algorithms, Object-Oriented Programming, and
+                              Python</strong>.
+
+                        <br /><br />I'm also exploring
+                        <strong>Artificial Intelligence</strong>, especially
+                        <strong>AI Prompt Engineering</strong>. I enjoy learning how to
+                        communicate with AI tools effectively and using them to speed up
+                        learning, brainstorm ideas, and solve problems. To me, AI isn't here
+                        to replace developers; it's a tool that helps us build better and
+                        learn faster.
+
+                        <br /><br />Studying <strong>FinTech</strong> has introduced me to the
+                        connection between technology and finance. Learning about banking
+                        systems and financial technologies has helped me understand how
+                        software can solve real-world challenges beyond traditional
+                        applications.
+
+                        <br /><br />One thing I believe is that growth comes from
+                        <strong>consistency</strong>. I don't try to learn everything at once.
+                        Instead, I focus on improving a little every day, strengthening my
+                        fundamentals, and staying curious about new technologies.
+
+                        <br /><br />Outside of coding, I enjoy playing <strong>chess</strong>.
+                        It has taught me patience, strategic thinking, and the importance of
+                        planning a few moves ahead&mdash;skills that naturally influence the
+                        way I approach programming and problem-solving.
+
+                        <br /><br />I'm still learning, still building, and always looking for
+                        opportunities to challenge myself. Every project teaches me something
+                        new, and every line of code brings me one step closer to becoming the
+                        developer I aspire to be.
+                  </p>
+            </div>
+      </section>
+
+      <br />
+
+      <section class="projects-section" id="experience">
+            <h2 class="section-title">
+                  Work Experience - <span class="purple-text">Professional Journey!</span>
+            </h2>
             <br />
+            <div class="timeline">
+                  <div class="timeline-line">
+                        <div class="timeline-progress"></div>
+                  </div>
 
-            <section class="contact-section" id="contact">
-                  <div class="contact-container">
-                        <h2 class="section-title">Get In Touch - <span class="purple-text">Ask Me Anything!</span></h2>
-                        <h4 class="contact-note">
-                              Ready to collaborate or have a project in mind?<br />
-                              I'm always open to new opportunities and interesting conversations.
-                        </h4>
+                  <div class="timeline-item left">
+                        <div class="timeline-number">01</div>
+                        <div class="timeline-content">
+                              <div class="project-tag">CodeNeuraX Tech Community</div>
+                              <img src="portfolio_assests/CodeNeuraX_Icon.png" alt="CodeNeuraX Logo"
+                                    class="company-logo" loading="lazy" decoding="async" />
+                              <h3>Technical Team Member</h3>
+                              <p style="text-align: left; padding: 10px 0">
+                                    &bull; Collaborated with core team members to develop innovative
+                                    solutions and contribute to technical projects.<br /><br />
+                                    &bull; Assisted in planning and organizing workshops, hackathons,
+                                    and community events.<br /><br />
+                                    &bull; Explored emerging technologies and strengthened my
+                                    technical knowledge through hands-on learning.<br /><br />
+                                    &bull; Worked with the team on practical projects that encouraged
+                                    innovation, collaboration, and real-world problem-solving.
+                              </p>
+                        </div>
+                        <div class="timeline-date">JAN 2026 &ndash; SEP 2026</div>
+                        <div class="timeline-dot"></div>
+                  </div>
+            </div>
+      </section>
+
+      <br />
+
+      <section class="projects-section" id="projects">
+            <h2 class="section-title">
+                  Projects Showcase - <span class="purple-text">What I've Built!</span>
+            </h2>
+            <br />
+            <div class="experience-grid projects-grid">
+                  <article class="experience-card project-showcase-card finance-project">
+                        <div class="project-card-meta">
+                              <span class="project-tag">Capstone Project</span>
+                              <span class="project-tech-label">MERN + AI</span>
+                        </div>
+                        <figure class="project-preview">
+                              <img src="portfolio_assests/finance-intelligence-preview.png"
+                                    alt="Finance Intelligence dashboard interface" loading="lazy" decoding="async" />
+                        </figure>
+                        <div class="project-card-content">
+                              <h3>
+                                    Finance Intelligence: AI-Driven Personal Finance Intelligence
+                              </h3>
+                              <p>
+                                    A role-aware financial platform that brings expense tracking,
+                                    personal analytics, and AI-assisted insights into one focused
+                                    dashboard experience.
+                              </p>
+                              <ul class="project-highlights" aria-label="Finance Intelligence highlights">
+                                    <li>
+                                          <i class="fa-solid fa-table-columns" aria-hidden="true"></i>
+                                          Role-based dashboards
+                                    </li>
+                                    <li>
+                                          <i class="fa-solid fa-wallet" aria-hidden="true"></i> Expense
+                                          tracking
+                                    </li>
+                                    <li>
+                                          <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+                                          AI-assisted insights
+                                    </li>
+                              </ul>
+                              <div class="project-stack" aria-label="Technology stack">
+                                    <span>MERN</span>
+                                    <span>AI-assisted insights</span>
+                                    <span>Analytics</span>
+                              </div>
+                        </div>
+                        <div class="project-links-wrapper">
+                              <a href="https://finance-intelligence-xi.vercel.app/" target="_blank"
+                                    rel="noopener noreferrer" class="project-btn primary-btn"><i
+                                          class="fa-regular fa-eye" aria-hidden="true"></i> Live Demo</a>
+                              <a href="https://github.com/Meet-Parsana1/Finance-Intelligence" target="_blank"
+                                    rel="noopener noreferrer" class="project-btn project-github-btn"><i
+                                          class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
+                        </div>
+                  </article>
+
+                  <article class="experience-card project-showcase-card canteen-project">
+                        <div class="project-card-meta">
+                              <span class="project-tag">Full-Stack Project</span>
+                              <span class="project-tech-label">MERN + JWT</span>
+                        </div>
+                        <figure class="project-preview">
+                              <img src="portfolio_assests/canteeniq-preview.png"
+                                    alt="CanteenIQ feedback analytics dashboard interface" loading="lazy"
+                                    decoding="async" />
+                        </figure>
+                        <div class="project-card-content">
+                              <h3>CanteenIQ: Canteen Feedback Intelligence</h3>
+                              <p>
+                                    A multi-tenant feedback platform that gives canteens secure
+                                    QR-based collection, isolated operations, and actionable analytics
+                                    for better dining experiences.
+                              </p>
+                              <ul class="project-highlights" aria-label="CanteenIQ highlights">
+                                    <li>
+                                          <i class="fa-solid fa-qrcode" aria-hidden="true"></i> QR-based
+                                          feedback collection
+                                    </li>
+                                    <li>
+                                          <i class="fa-solid fa-building-shield" aria-hidden="true"></i>
+                                          Multi-tenant isolation
+                                    </li>
+                                    <li>
+                                          <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                                          Feedback analytics
+                                    </li>
+                              </ul>
+                              <div class="project-stack" aria-label="Technology stack">
+                                    <span>MERN</span>
+                                    <span>JWT</span>
+                                    <span>Multi-tenant architecture</span>
+                              </div>
+                        </div>
+                        <div class="project-links-wrapper">
+                              <a href="https://canteen-feedback-management-system.vercel.app/" target="_blank"
+                                    rel="noopener noreferrer" class="project-btn primary-btn"><i
+                                          class="fa-regular fa-eye" aria-hidden="true"></i> Live Demo</a>
+                              <a href="https://github.com/Meet-Parsana1/Canteen-Feedback-Management-System"
+                                    target="_blank" rel="noopener noreferrer" class="project-btn project-github-btn"><i
+                                          class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
+                        </div>
+                  </article>
+            </div>
+      </section>
+
+      <br />
+
+      <section class="skills-section" id="skills">
+            <h2 class="section-title">
+                  Technical Skills - <span class="purple-text">Core Expertise!</span>
+            </h2>
+
+            <div class="skill-filters" id="skillFilters">
+                  <button class="filter-btn active" data-filter="all">All</button>
+                  <button class="filter-btn" data-filter="languages">Languages</button>
+                  <button class="filter-btn" data-filter="frontend">Frontend</button>
+                  <button class="filter-btn" data-filter="backend">Backend</button>
+                  <button class="filter-btn" data-filter="frameworks">Frameworks</button>
+                  <button class="filter-btn" data-filter="databases">Databases</button>
+                  <button class="filter-btn" data-filter="tools">Tools</button>
+            </div>
+
+            <div class="skill-grid" id="skillGrid">
+                  <div class="skill-card" data-category="languages">
+                        <i class="devicon-c-plain colored"></i>
+                        <span>C</span>
+                  </div>
+                  <div class="skill-card" data-category="languages">
+                        <i class="devicon-cplusplus-plain colored"></i>
+                        <span>C++</span>
+                  </div>
+                  <div class="skill-card" data-category="languages">
+                        <i class="devicon-javascript-plain colored"></i>
+                        <span>JS</span>
+                  </div>
+                  <div class="skill-card" data-category="languages">
+                        <i class="fa-brands fa-python" style="color: #3776ab"></i>
+                        <span>Python</span>
+                  </div>
+                  <div class="skill-card" data-category="frontend">
+                        <i class="devicon-html5-plain colored"></i>
+                        <span>HTML5</span>
+                  </div>
+                  <div class="skill-card" data-category="frontend">
+                        <i class="devicon-css3-plain colored"></i>
+                        <span>CSS3</span>
+                  </div>
+                  <div class="skill-card" data-category="frontend">
+                        <i class="devicon-react-original colored"></i>
+                        <span>React.js</span>
+                  </div>
+                  <div class="skill-card" data-category="backend">
+                        <i class="devicon-nodejs-plain-wordmark colored"></i>
+                        <span>Node.js</span>
+                  </div>
+                  <div class="skill-card" data-category="backend">
+                        <i class="devicon-express-original"></i>
+                        <span>Express.js</span>
+                  </div>
+                  <div class="skill-card" data-category="frameworks">
+                        <i class="devicon-pandas-plain colored"></i>
+                        <span>Pandas</span>
+                  </div>
+                  <div class="skill-card" data-category="frameworks">
+                        <i class="devicon-numpy-plain colored"></i>
+                        <span>NumPy</span>
+                  </div>
+                  <div class="skill-card" data-category="frameworks">
+                        <i class="fa-solid fa-chart-column" style="color: #11557c"></i>
+                        <span>Matplotlib</span>
+                  </div>
+                  <div class="skill-card" data-category="frameworks">
+                        <i class="fa-solid fa-chart-line" style="color: #4c72b0"></i>
+                        <span>Seaborn</span>
+                  </div>
+                  <div class="skill-card" data-category="databases">
+                        <i class="devicon-mysql-plain colored"></i>
+                        <span>MySQL</span>
+                  </div>
+                  <div class="skill-card" data-category="databases">
+                        <i class="devicon-mongodb-plain colored"></i>
+                        <span>MongoDB</span>
+                  </div>
+                  <div class="skill-card" data-category="tools">
+                        <i class="devicon-git-plain colored"></i>
+                        <span>Git</span>
+                  </div>
+                  <div class="skill-card" data-category="tools">
+                        <i class="devicon-github-original"></i>
+                        <span>GitHub</span>
+                  </div>
+                  <div class="skill-card" data-category="tools">
+                        <i class="devicon-postman-plain colored"></i>
+                        <span>Postman</span>
+                  </div>
+                  <div class="skill-card" data-category="tools">
+                        <i class="devicon-vercel-original"></i>
+                        <span>Vercel</span>
+                  </div>
+            </div>
+      </section>
+
+      <section class="certifications-section" id="certifications">
+            <h2 class="section-title">
+                  Certifications - <span class="purple-text">Learning Milestones!</span>
+            </h2>
+
+            <div class="cert-grid">
+                  <article class="cert-item">
+                        <a class="cert-preview"
+                              href="https://drive.google.com/file/d/1u2S2udtZN5Kvm9lWprThZH8fuBOqb69Y/view?usp=sharing"
+                              target="_blank" rel="noopener noreferrer"
+                              aria-label="View Empathy Encryption Hackathon credential">
+                              <img src="portfolio_assests/Empathy_Encryption_Hackathon_Certificate.png"
+                                    alt="Empathy Encryption Hackathon certificate" loading="lazy" decoding="async" />
+                        </a>
+                        <div class="cert-info">
+                              <h3>Empathy Encryption Hackathon</h3>
+                              <p>
+                                    Built a Python password-strength checker in a collaborative
+                                    hackathon, applying validation logic and practical problem-solving
+                                    under time constraints.
+                              </p>
+                              <a href="https://drive.google.com/file/d/1u2S2udtZN5Kvm9lWprThZH8fuBOqb69Y/view?usp=sharing"
+                                    target="_blank" rel="noopener noreferrer" class="cert-credential-link"
+                                    aria-label="View Empathy Encryption Hackathon credential">View Credential
+                                    <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        </div>
+                  </article>
+
+                  <article class="cert-item">
+                        <a class="cert-preview"
+                              href="https://drive.google.com/file/d/1bIuWYCXAh7ekIRrwp-2jVr5wd7MAkCKk/view?usp=sharing"
+                              target="_blank" rel="noopener noreferrer"
+                              aria-label="View Introduction to Prompt Engineering credential">
+                              <img src="portfolio_assests/Introduction_to_Prompt_Engineering_Certificate.png"
+                                    alt="Introduction to Prompt Engineering certificate" loading="lazy"
+                                    decoding="async" />
+                        </a>
+                        <div class="cert-info">
+                              <h3>Introduction to Prompt Engineering</h3>
+                              <p>
+                                    Completed a practical course on designing clear, structured
+                                    prompts for more accurate and relevant AI responses.
+                              </p>
+                              <a href="https://drive.google.com/file/d/1bIuWYCXAh7ekIRrwp-2jVr5wd7MAkCKk/view?usp=sharing"
+                                    target="_blank" rel="noopener noreferrer" class="cert-credential-link"
+                                    aria-label="View Introduction to Prompt Engineering credential">View Credential
+                                    <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        </div>
+                  </article>
+
+                  <article class="cert-item">
+                        <a class="cert-preview"
+                              href="https://drive.google.com/file/d/1M8LwrGnfHnQU6G9HOXkdiZdui-IZo6-0/view?usp=sharing"
+                              target="_blank" rel="noopener noreferrer" aria-label="View SQL for Beginners credential">
+                              <img src="portfolio_assests/SQL_for_Beginners_Certificate.png"
+                                    alt="SQL for Beginners certificate" loading="lazy" decoding="async" />
+                        </a>
+                        <div class="cert-info">
+                              <h3>SQL for Beginners</h3>
+                              <p>
+                                    Built core SQL knowledge across relational databases, MySQL, and
+                                    query writing for common data operations.
+                              </p>
+                              <a href="https://drive.google.com/file/d/1M8LwrGnfHnQU6G9HOXkdiZdui-IZo6-0/view?usp=sharing"
+                                    target="_blank" rel="noopener noreferrer" class="cert-credential-link"
+                                    aria-label="View SQL for Beginners credential">View Credential
+                                    <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        </div>
+                  </article>
+
+                  <article class="cert-item">
+                        <a class="cert-preview"
+                              href="https://drive.google.com/file/d/1vxIf5nX-Anp53UQ13GH6RGBXopY1ld95/view?usp=sharing"
+                              target="_blank" rel="noopener noreferrer"
+                              aria-label="View C Programming Mastery credential">
+                              <img src="portfolio_assests/C_Programming_Mastery_Certificate.png"
+                                    alt="C Programming certificate" loading="lazy" decoding="async" />
+                        </a>
+                        <div class="cert-info">
+                              <h3>C Programming Mastery</h3>
+                              <p>
+                                    Completed an intensive C program covering programming
+                                    fundamentals, pointers, memory management, and debugging, earning
+                                    93/100.
+                              </p>
+                              <a href="https://drive.google.com/file/d/1vxIf5nX-Anp53UQ13GH6RGBXopY1ld95/view?usp=sharing"
+                                    target="_blank" rel="noopener noreferrer" class="cert-credential-link"
+                                    aria-label="View C Programming Mastery credential">View Credential
+                                    <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        </div>
+                  </article>
+            </div>
+      </section>
+
+      <br />
+
+      <section class="profiles-section" id="profiles">
+            <h2 class="section-title">
+                  Web Presence - <span class="purple-text">Dev Network!</span>
+            </h2>
+            <div class="profile-header">
+                  <div class="profile-img-main">
+                        <img src="portfolio_assests/Meet_Parsana_Profile.png" alt="Meet Parsana" loading="lazy"
+                              decoding="async" />
+                  </div>
+                  <div class="profile-text">
+                        <p class="purple-text">@MEETPARSANA</p>
+                  </div>
+            </div>
+
+            <div class="profiles-grid">
+                  <a href="https://www.linkedin.com/in/meet-parsana/" target="_blank" class="profile-card"
+                        aria-label="LinkedIn Profile">
+                        <div class="profile-icon">
+                              <i class="fa-brands fa-linkedin" style="color: #0077b5"></i>
+                        </div>
+                        <div class="profile-info">
+                              <h3>LinkedIn</h3>
+                              <p>Connect</p>
+                        </div>
+                  </a>
+
+                  <a href="https://github.com/Meet-Parsana1" target="_blank" class="profile-card"
+                        aria-label="GitHub Profile">
+                        <div class="profile-icon">
+                              <i class="fa-brands fa-github"></i>
+                        </div>
+                        <div class="profile-info">
+                              <h3>GitHub</h3>
+                              <p>Commit</p>
+                        </div>
+                  </a>
+
+                  <a href="https://leetcode.com/u/Meet_Parsana_/" target="_blank" class="profile-card"
+                        aria-label="LeetCode Profile">
+                        <div class="profile-icon">
+                              <i class="devicon-leetcode-plain colored"></i>
+                        </div>
+                        <div class="profile-info">
+                              <h3>LeetCode</h3>
+                              <p>Compete</p>
+                        </div>
+                  </a>
+
+                  <a href="https://www.instagram.com/meet_parsana_01/" target="_blank" class="profile-card"
+                        aria-label="Instagram Profile">
+                        <div class="profile-icon">
+                              <i class="fa-brands fa-instagram" style="color: #e4405f"></i>
+                        </div>
+                        <div class="profile-info">
+                              <h3>Instagram</h3>
+                              <p>Follow</p>
+                        </div>
+                  </a>
+            </div>
+            <br />
+            <p class="profile-note">
+                  You can explore further by clicking on any of the profile cards above!
+            </p>
+      </section>
+
+      <br />
+
+      <section class="contact-section" id="contact">
+            <div class="contact-container">
+                  <div class="contact-layout">
+                        <div class="contact-intro">
+                              <h2 class="section-title">
+                                    Get In Touch - <span class="purple-text">Ask Me Anything!</span>
+                              </h2>
+                              <p class="contact-note">
+                                    Ready to collaborate or have a project in mind? I’m always open to
+                                    new opportunities and interesting conversations.
+                              </p>
+                              <div class="contact-links" aria-label="Professional links">
+                                    <a href="https://www.linkedin.com/in/meet-parsana/" target="_blank"
+                                          rel="noopener noreferrer" class="contact-link">
+                                          <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                                          LinkedIn <span aria-hidden="true">↗</span>
+                                    </a>
+                                    <a href="https://github.com/Meet-Parsana1" target="_blank" rel="noopener noreferrer"
+                                          class="contact-link">
+                                          <i class="fa-brands fa-github" aria-hidden="true"></i>
+                                          GitHub <span aria-hidden="true">↗</span>
+                                    </a>
+                                    <a href="mailto:meetparsana0a@gmail.com" class="contact-link">
+                                          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                                          Email me
+                                    </a>
+                              </div>
+                        </div>
                         <div class="contact-card">
+                              <div class="contact-card-heading">
+                                    <h3>Send a message</h3>
+                                    <p>I’ll get back to you as soon as I can.</p>
+                              </div>
                               <form id="contactForm" class="contact-form" novalidate>
                                     <div class="form-group">
-                                          <input
-                                                type="text"
-                                                id="name"
-                                                name="name"
-                                                required
-                                                minlength="2"
-                                                maxlength="60"
-                                                placeholder=" "
-                                                autocomplete="name"
-                                                aria-describedby="nameError"
-                                          />
                                           <label for="name">Name</label>
-                                          <i class="fa-solid fa-user input-icon"></i>
+                                          <input type="text" id="name" name="name" required minlength="2" maxlength="60"
+                                                placeholder="Your name" autocomplete="name"
+                                                aria-describedby="nameError" />
+                                          <i class="fa-solid fa-user input-icon" aria-hidden="true"></i>
                                           <p class="field-error" id="nameError" aria-live="polite"></p>
                                     </div>
                                     <div class="form-group">
-                                          <input
-                                                type="email"
-                                                id="email"
-                                                name="email"
-                                                required
-                                                maxlength="254"
-                                                placeholder=" "
-                                                autocomplete="email"
-                                                aria-describedby="emailError"
-                                          />
                                           <label for="email">Email</label>
-                                          <i class="fa-solid fa-envelope input-icon"></i>
+                                          <input type="email" id="email" name="email" required maxlength="254"
+                                                placeholder="you@example.com" autocomplete="email"
+                                                aria-describedby="emailError" />
+                                          <i class="fa-solid fa-envelope input-icon" aria-hidden="true"></i>
                                           <p class="field-error" id="emailError" aria-live="polite"></p>
                                     </div>
                                     <div class="form-group">
-                                          <textarea
-                                                id="message"
-                                                name="message"
-                                                rows="4"
-                                                required
-                                                minlength="20"
+                                          <div class="field-label-row">
+                                                <label for="message">Message</label>
+                                                <p class="message-count" id="messageCount" aria-live="polite">
+                                                      0 / 2000
+                                                </p>
+                                          </div>
+                                          <textarea id="message" name="message" rows="4" required minlength="20"
                                                 maxlength="2000"
-                                                placeholder=" "
-                                                aria-describedby="messageError messageCount"
-                                          ></textarea>
-                                          <label for="message">Message</label>
-                                          <i class="fa-solid fa-comment input-icon"></i>
+                                                placeholder="Tell me a little about your project or idea..."
+                                                aria-describedby="messageError messageCount"></textarea>
+                                          <i class="fa-solid fa-comment input-icon" aria-hidden="true"></i>
                                           <p class="field-error" id="messageError" aria-live="polite"></p>
-                                          <p class="message-count" id="messageCount">0 / 2000</p>
                                     </div>
                                     <button type="submit" class="btn-resume btn-submit">
-                                          <span>Send Message</span>
-                                          <i class="fa-solid fa-paper-plane"></i>
+                                          <span class="button-label">Send Message</span>
+                                          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
                                     </button>
                                     <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
                               </form>
                         </div>
                   </div>
-            </section>
+            </div>
+      </section>
 
-            <br />
+      <br />
 
-            <footer class="footer">
-                  <div class="footer-container">
-                        <div class="footer-brand">
-                              <h2 class="footer-logo">Meet<span class="purple-text">Parsana</span></h2>
-                              <p class="footer-tagline">Innovation at the Intersection of Code and Design!</p>
-                        </div>
-
-                        <ul class="footer-nav-links">
-                              <li><a href="#home">Home</a></li>
-                              <li><a href="#about">About</a></li>
-                              <li><a href="#experience">Experience</a></li>
-                              <li><a href="#projects">Projects</a></li>
-                              <li><a href="#skills">Skills</a></li>
-                              <li><a href="#certifications">Certifications</a></li>
-                              <li><a href="#profiles">Profiles</a></li>
-                              <li><a href="#contact">Contact</a></li>
-                        </ul>
-
-                        <div class="footer-socials">
-                              <a
-                                    href="https://www.linkedin.com/in/meet-parsana/"
-                                    target="_blank"
-                                    class="social-link linkedin"
-                                    aria-label="LinkedIn"
-                                    ><i class="fa-brands fa-linkedin"></i
-                              ></a>
-                              <a
-                                    href="https://github.com/Meet-Parsana1"
-                                    target="_blank"
-                                    class="social-link github"
-                                    aria-label="GitHub"
-                                    ><i class="fa-brands fa-github"></i
-                              ></a>
-                              <a
-                                    href="mailto:meetparsana0a@gmail.com"
-                                    class="social-link email"
-                                    aria-label="Email Meet Parsana"
-                                    ><i class="fa-solid fa-envelope"></i
-                              ></a>
-                        </div>
+      <footer class="footer">
+            <div class="footer-container">
+                  <div class="footer-brand">
+                        <h2 class="footer-logo">
+                              Meet<span class="purple-text">Parsana</span>
+                        </h2>
+                        <p class="footer-tagline">
+                              Innovation at the Intersection of Code and Design!
+                        </p>
                   </div>
 
-                  <div class="footer-bottom">
-                        <p>&copy; 2026 Meet Parsana. All rights reserved.</p>
-                  </div>
-            </footer>
+                  <ul class="footer-nav-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#experience">Experience</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#certifications">Certifications</a></li>
+                        <li><a href="#profiles">Profiles</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                  </ul>
 
-            <button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top">
-                  <i class="fa-solid fa-arrow-up"></i>
-            </button>
-
-            <div id="resumeModal" class="resume-modal" role="dialog" aria-modal="true" aria-labelledby="resumeTitle">
-                  <div class="resume-modal-content glass-card">
-                        <span class="close-modal" id="closeResumeBtn" aria-label="Close Resume Modal">&times;</span>
-                        <div class="resume-modal-header">
-                              <h2 id="resumeTitle">My Resume - <span class="purple-text">On Paper!</span></h2>
-                              <div class="resume-modal-actions">
-                                    <a
-                                          href="https://drive.google.com/file/d/1bq8ZYGti_gXV2qTRGiueYkpMp6mDKOUD/view?usp=sharing"
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          class="resume-action-btn"
-                                          aria-label="Open Resume in New Tab"
-                                    >
-                                          <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                          <span>View Full</span>
-                                    </a>
-                                    <a
-                                          href="https://drive.google.com/uc?export=download&id=1bq8ZYGti_gXV2qTRGiueYkpMp6mDKOUD"
-                                          class="resume-action-btn"
-                                          aria-label="Download Resume PDF"
-                                    >
-                                          <i class="fa-solid fa-download"></i>
-                                          <span>Download</span>
-                                    </a>
-                              </div>
-                        </div>
-                        <div class="resume-iframe-container">
-                              <iframe
-                                    src="https://drive.google.com/file/d/1bq8ZYGti_gXV2qTRGiueYkpMp6mDKOUD/preview"
-                                    width="100%"
-                                    height="100%"
-                                    title="Meet Parsana Resume"
-                                    style="border: none"
-                              ></iframe>
-                        </div>
+                  <div class="footer-socials">
+                        <a href="https://www.linkedin.com/in/meet-parsana/" target="_blank" class="social-link linkedin"
+                              aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="https://github.com/Meet-Parsana1" target="_blank" class="social-link github"
+                              aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                        <a href="mailto:meetparsana0a@gmail.com" class="social-link email"
+                              aria-label="Email Meet Parsana"><i class="fa-solid fa-envelope"></i></a>
                   </div>
             </div>
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-            <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+            <div class="footer-bottom">
+                  <p>&copy; 2026 Meet Parsana. All rights reserved.</p>
+            </div>
+      </footer>
 
-            <script src="3d_background.js"></script>
-            <script src="script.js"></script>
-      </body>
+      <button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top">
+            <i class="fa-solid fa-arrow-up"></i>
+      </button>
+
+      <div id="resumeModal" class="resume-modal" role="dialog" aria-modal="true" aria-labelledby="resumeTitle">
+            <div class="resume-modal-content glass-card">
+                  <span class="close-modal" id="closeResumeBtn" aria-label="Close Resume Modal">&times;</span>
+                  <div class="resume-modal-header">
+                        <h2 id="resumeTitle">
+                              My Resume - <span class="purple-text">On Paper!</span>
+                        </h2>
+                        <div class="resume-modal-actions">
+                              <a href="https://drive.google.com/file/d/1SOv1T2H3UToDvL3g3Fss-FRgv_0tpWYU/view?usp=sharing"
+                                    target="_blank" rel="noopener noreferrer" class="resume-action-btn"
+                                    aria-label="Open Resume in New Tab">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    <span>View Full</span>
+                              </a>
+                              <a href="https://drive.google.com/uc?export=download&id=1SOv1T2H3UToDvL3g3Fss-FRgv_0tpWYU"
+                                    class="resume-action-btn" aria-label="Download Resume PDF">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>Download</span>
+                              </a>
+                        </div>
+                  </div>
+                  <div class="resume-iframe-container">
+                        <iframe id="resumeIframe"
+                              data-src="https://drive.google.com/file/d/1SOv1T2H3UToDvL3g3Fss-FRgv_0tpWYU/preview"
+                              width="100%" height="100%" title="Meet Parsana Resume" style="border: none"></iframe>
+                  </div>
+            </div>
+      </div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+      <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+
+      <script src="3d_background.js"></script>
+      <script src="script.js"></script>
+</body>
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+

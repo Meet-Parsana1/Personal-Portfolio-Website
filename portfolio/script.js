@@ -276,6 +276,12 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         const messageCount = document.getElementById('messageCount');
         const contactStatus = document.getElementById('contactStatus');
+        const submitButton = contactForm.querySelector('.btn-submit');
+        const submitLabel = submitButton?.querySelector('.button-label');
+        const submitIcon = submitButton?.querySelector('i');
+        const touchedFields = new Set();
+        let isSubmitting = false;
+        let buttonResetTimeout;
 
         const normalize = (value) => value.trim().replace(/\s+/g, ' ');
         const validators = {
@@ -301,10 +307,12 @@ document.addEventListener('DOMContentLoaded', () => {
         function setFieldState(field, error) {
             const errorElement = document.getElementById(`${field.name}Error`);
             const group = field.closest('.form-group');
-            errorElement.textContent = error;
+            if (errorElement) errorElement.textContent = error;
             field.setAttribute('aria-invalid', String(Boolean(error)));
-            group.classList.toggle('has-error', Boolean(error));
-            group.classList.toggle('is-valid', !error && field.value.trim().length > 0);
+            if (group) {
+                group.classList.toggle('has-error', Boolean(error));
+                group.classList.toggle('is-valid', !error && field.value.trim().length > 0);
+            }
         }
 
         function validateField(field) {
@@ -323,34 +331,64 @@ document.addEventListener('DOMContentLoaded', () => {
             contactStatus.className = `contact-status ${type}`;
         }
 
+        function setSubmitButtonState(state = 'idle') {
+            if (!submitButton) return;
+
+            clearTimeout(buttonResetTimeout);
+            submitButton.classList.remove('is-loading', 'is-success', 'is-error');
+            submitButton.disabled = state === 'loading';
+
+            const states = {
+                idle: { label: 'Send Message', icon: 'fa-paper-plane' },
+                loading: { label: 'Sending…', icon: 'fa-spinner fa-spin' },
+                success: { label: 'Message Sent', icon: 'fa-check' },
+                error: { label: 'Try Again', icon: 'fa-arrow-rotate-right' }
+            };
+            const current = states[state] || states.idle;
+
+            if (state !== 'idle') submitButton.classList.add(`is-${state}`);
+            if (submitLabel) submitLabel.textContent = current.label;
+            if (submitIcon) submitIcon.className = `fa-solid ${current.icon}`;
+        }
+
+        function resetSubmitButtonAfterDelay() {
+            buttonResetTimeout = window.setTimeout(() => setSubmitButtonState(), 3000);
+        }
+
         Object.values(fields).forEach(field => {
-            field.addEventListener('blur', () => validateField(field));
+            field.addEventListener('blur', () => {
+                touchedFields.add(field.name);
+                validateField(field);
+            });
             field.addEventListener('input', () => {
                 if (field.name === 'message') updateMessageCount();
-                if (field.getAttribute('aria-invalid') === 'true') validateField(field);
+                if (touchedFields.has(field.name) || field.getAttribute('aria-invalid') === 'true') {
+                    validateField(field);
+                }
             });
         });
         updateMessageCount();
 
-        contactForm.addEventListener('submit', function (e) {
+        contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
+            if (isSubmitting) return;
 
-            const formIsValid = Object.values(fields).every(validateField);
+            Object.keys(fields).forEach(name => touchedFields.add(name));
+            const formIsValid = Object.values(fields)
+                .map(validateField)
+                .every(Boolean);
             if (!formIsValid) {
                 const firstInvalidField = Object.values(fields).find(field => field.getAttribute('aria-invalid') === 'true');
                 firstInvalidField.focus();
+                setContactStatus('Please review the highlighted fields and try again.', 'error');
                 if (window.soundSystem) window.soundSystem.playError();
                 return;
             }
 
             setContactStatus('');
-
-            const btn = contactForm.querySelector('button');
-            const originalText = btn.innerHTML;
-
-            btn.innerHTML = '<span>Sending...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
-            btn.style.opacity = '0.7';
-            btn.style.pointerEvents = 'none';
+            isSubmitting = true;
+            contactForm.setAttribute('aria-busy', 'true');
+            setSubmitButtonState('loading');
 
             const object = {
                 name: normalize(fields.name.value),
@@ -360,51 +398,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const json = JSON.stringify(object);
 
-            fetch('/api/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: json
-            })
-                .then(async (response) => {
-                    const json = await response.json();
-                    if (response.status == 200) {
-
-                        btn.innerHTML = '<span>Message Delivered!</span> <i class="fa-solid fa-check"></i>';
-                        btn.style.background = 'linear-gradient(90deg, #22c55e, #16a34a, #22c55e)';
-                        btn.style.borderColor = '#4ade80';
-                        contactForm.reset();
-                        updateMessageCount();
-                        Object.values(fields).forEach(field => setFieldState(field, ''));
-                        setContactStatus('Your message has been sent successfully.', 'success');
-                        if (window.soundSystem) window.soundSystem.playSuccess();
-                    } else {
-
-                        btn.innerHTML = '<span>Error, Please Retry!</span> <i class="fa-solid fa-triangle-exclamation"></i>';
-                        btn.style.background = 'linear-gradient(90deg, #ef4444, #dc2626, #ef4444)';
-                        setContactStatus(json.message || 'Unable to send your message. Check the terminal and try again.', 'error');
-                        if (window.soundSystem) window.soundSystem.playError();
-                    }
-                })
-                .catch(error => {
-
-                    btn.innerHTML = '<span>Error!</span> <i class="fa-solid fa-triangle-exclamation"></i>';
-                    btn.style.background = 'linear-gradient(90deg, #ef4444, #dc2626, #ef4444)';
-                    setContactStatus('Cannot reach the local contact server. Run “npm run serve” and open http://localhost:3000.', 'error');
-                    if (window.soundSystem) window.soundSystem.playError();
-                })
-                .finally(() => {
-
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.style.background = '';
-                        btn.style.borderColor = '';
-                        btn.style.opacity = '1';
-                        btn.style.pointerEvents = 'all';
-                    }, 3000);
+            try {
+                const response = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: json
                 });
+
+                let result = {};
+                try {
+                    result = await response.json();
+                } catch (error) {
+                    // A malformed response is handled as a failed submission below.
+                }
+
+                if (!response.ok || result.success !== true) {
+                    if (response.status === 404 || response.status === 405) {
+                        throw new Error(
+                            'The contact endpoint is unavailable on this host. For local testing, run “npm run serve” and open http://localhost:3000.',
+                        );
+                    }
+                    throw new Error(result.message || 'Unable to send your message. Please try again.');
+                }
+
+                contactForm.reset();
+                touchedFields.clear();
+                updateMessageCount();
+                Object.values(fields).forEach(field => setFieldState(field, ''));
+                setSubmitButtonState('success');
+                setContactStatus(result.message || 'Your message has been sent successfully.', 'success');
+                if (window.soundSystem) window.soundSystem.playSuccess();
+                resetSubmitButtonAfterDelay();
+            } catch (error) {
+                setSubmitButtonState('error');
+                setContactStatus(error.message || 'Unable to send your message. Please try again.', 'error');
+                if (window.soundSystem) window.soundSystem.playError();
+                resetSubmitButtonAfterDelay();
+            } finally {
+                isSubmitting = false;
+                contactForm.removeAttribute('aria-busy');
+            }
         });
     }
 
@@ -412,10 +448,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const openResumeBtn = document.getElementById('openResumeBtn');
     const closeResumeBtn = document.getElementById('closeResumeBtn');
     const footerResumeBtn = document.getElementById('footerResumeBtn');
+    const resumeIframe = document.getElementById('resumeIframe');
 
     if (resumeModal && closeResumeBtn) {
         const openModal = (e) => {
             if (e) e.preventDefault();
+            if (resumeIframe && !resumeIframe.getAttribute('src') && resumeIframe.dataset.src) {
+                resumeIframe.src = resumeIframe.dataset.src;
+            }
             resumeModal.classList.add('show');
             document.body.style.overflow = 'hidden';
             window.lenis?.stop();

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const http = require('http');
-const https = require('https');
 const path = require('path');
+const { MAX_BODY_BYTES, parseRequestBody, sendContactEmail, validateContactForm } = require('./lib/contact');
 
 const rootDirectory = __dirname;
 const port = Number(process.env.PORT) || 3000;
@@ -27,77 +27,12 @@ function loadEnvironment() {
 }
 
 function json(response, statusCode, data) {
-      response.writeHead(statusCode, { 'Content-Type': 'application/json; charset=utf-8' });
+      response.writeHead(statusCode, {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Cache-Control': 'no-store',
+            'X-Content-Type-Options': 'nosniff',
+      });
       response.end(JSON.stringify(data));
-}
-
-function escapeHtml(value) {
-      const entities = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
-      return String(value).replace(/[&<>"']/g, (character) => entities[character]);
-}
-
-function validateContactForm({ name, email, message }) {
-      const cleanedName = String(name || '')
-            .trim()
-            .replace(/\s+/g, ' ');
-      const cleanedEmail = String(email || '')
-            .trim()
-            .toLowerCase();
-      const cleanedMessage = String(message || '').trim();
-
-      if (cleanedName.length < 2 || cleanedName.length > 60 || !/^[\p{L}][\p{L}\s.'-]*$/u.test(cleanedName)) {
-            return { error: 'Enter a valid name.', data: null };
-      }
-      if (cleanedEmail.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(cleanedEmail)) {
-            return { error: 'Enter a valid email address.', data: null };
-      }
-      if (cleanedMessage.length < 20 || cleanedMessage.length > 2000) {
-            return { error: 'Message must contain 20 to 2,000 characters.', data: null };
-      }
-      return { data: { name: cleanedName, email: cleanedEmail, message: cleanedMessage } };
-}
-
-function sendContactEmail({ name, email, message }) {
-      const apiKey = process.env.RESEND_API_KEY;
-      const receiverEmail = process.env.RECEIVER_EMAIL;
-      if (!apiKey || !receiverEmail) {
-            return Promise.reject(new Error('Add RESEND_API_KEY and RECEIVER_EMAIL to .env.'));
-      }
-
-      const payload = JSON.stringify({
-            from: 'Portfolio Contact <onboarding@resend.dev>',
-            to: [receiverEmail],
-            reply_to: email,
-            subject: `New Portfolio Message from ${name}`,
-            html: `<h3>New Contact Form Submission</h3><p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Email:</strong> ${escapeHtml(email)}</p><p><strong>Message:</strong><br>${escapeHtml(message).replace(/\n/g, '<br>')}</p>`,
-      });
-
-      return new Promise((resolve, reject) => {
-            const request = https.request(
-                  {
-                        hostname: 'api.resend.com',
-                        path: '/emails',
-                        method: 'POST',
-                        headers: {
-                              Authorization: `Bearer ${apiKey}`,
-                              'Content-Type': 'application/json',
-                              'Content-Length': Buffer.byteLength(payload),
-                        },
-                  },
-                  (response) => {
-                        let body = '';
-                        response.on('data', (chunk) => {
-                              body += chunk;
-                        });
-                        response.on('end', () => {
-                              if (response.statusCode === 200 || response.statusCode === 201) return resolve();
-                              reject(new Error(`Resend returned ${response.statusCode}: ${body}`));
-                        });
-                  },
-            );
-            request.on('error', reject);
-            request.end(payload);
-      });
 }
 
 function serveStaticFile(request, response) {
@@ -128,21 +63,39 @@ function serveStaticFile(request, response) {
 loadEnvironment();
 
 http.createServer((request, response) => {
-      if (request.method === 'POST' && request.url === '/api/submit') {
+      const requestPath = request.url.split('?')[0];
+      if (requestPath === '/api/submit') {
+            if (request.method !== 'POST') {
+                  response.setHeader('Allow', 'POST');
+                  return json(response, 405, { message: 'Method Not Allowed' });
+            }
+
             let body = '';
+            let bodyTooLarge = false;
             request.on('data', (chunk) => {
+                  if (bodyTooLarge) return;
                   body += chunk;
-                  if (body.length > 10_000) request.destroy();
+                  if (Buffer.byteLength(body) > MAX_BODY_BYTES) bodyTooLarge = true;
             });
             request.on('end', async () => {
                   try {
-                        const validation = validateContactForm(JSON.parse(body));
+                        if (bodyTooLarge) return json(response, 413, { message: 'Request body is too large.' });
+                        const validation = validateContactForm(parseRequestBody(body));
                         if (validation.error) return json(response, 400, { message: validation.error });
                         await sendContactEmail(validation.data);
                         json(response, 200, { success: true, message: 'Message sent!' });
                   } catch (error) {
                         console.error('Contact form error:', error.message);
-                        json(response, 500, { message: 'Unable to send the message. Check the terminal for details.' });
+                        const statusCode = error instanceof SyntaxError ? 400 : 500;
+                        const isLocalDevelopment = process.env.NODE_ENV !== 'production';
+                        json(response, statusCode, {
+                              message:
+                                    statusCode === 400
+                                          ? 'Invalid request body.'
+                                          : isLocalDevelopment
+                                            ? 'Resend could not send this test email. Check the terminal for the exact Resend error.'
+                                            : 'Unable to send the message.',
+                        });
                   }
             });
             return;
