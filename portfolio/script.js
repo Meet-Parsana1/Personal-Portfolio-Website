@@ -369,6 +369,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         updateMessageCount();
 
+        function getContactEndpoint() {
+            // When previewing locally through static dev servers (e.g. VS Code Live Server on port 5500, 5501, etc.)
+            // or file:// protocol, route requests to the local Node.js server on port 3000.
+            const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            if ((isLocalHost && window.location.port !== '3000' && window.location.port !== '') || window.location.protocol === 'file:') {
+                const host = window.location.hostname || '127.0.0.1';
+                return `http://${host}:3000/api/submit`;
+            }
+            return '/api/submit';
+        }
+
         contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             if (isSubmitting) return;
@@ -397,16 +408,28 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             const json = JSON.stringify(object);
+            const endpoint = getContactEndpoint();
+            const isTargetingLocalDevServer = endpoint.startsWith('http://') || endpoint.startsWith('https://');
 
             try {
-                const response = await fetch('/api/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: json
-                });
+                let response;
+                try {
+                    response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: json
+                    });
+                } catch (networkError) {
+                    if (isTargetingLocalDevServer) {
+                        throw new Error(
+                            'Local server is not running. Please run “npm run serve” in your terminal (or open http://localhost:3000).',
+                        );
+                    }
+                    throw networkError;
+                }
 
                 let result = {};
                 try {

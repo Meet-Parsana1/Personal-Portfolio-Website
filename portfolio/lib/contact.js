@@ -28,9 +28,9 @@ function getResendConfiguration(environment = process.env) {
       const apiKey = environment.RESEND_API_KEY;
       const receiverEmail = environment.RECEIVER_EMAIL;
       const isProduction = environment.NODE_ENV === 'production' || environment.VERCEL_ENV === 'production';
-      const fromEmail = environment.RESEND_FROM_EMAIL || (!isProduction && 'Portfolio Contact <onboarding@resend.dev>');
-      if (!apiKey || !receiverEmail || !fromEmail) {
-            const missing = [!apiKey && 'RESEND_API_KEY', !receiverEmail && 'RECEIVER_EMAIL', !fromEmail && 'RESEND_FROM_EMAIL'].filter(Boolean);
+      const fromEmail = environment.RESEND_FROM_EMAIL || 'Portfolio Contact <onboarding@resend.dev>';
+      if (!apiKey || !receiverEmail) {
+            const missing = [!apiKey && 'RESEND_API_KEY', !receiverEmail && 'RECEIVER_EMAIL'].filter(Boolean);
             throw new Error(`Missing contact environment variable(s): ${missing.join(', ')}`);
       }
       return { apiKey, receiverEmail, fromEmail, isProduction };
@@ -77,9 +77,14 @@ function sendContactEmail({ name, email, message }, environment = process.env) {
 }
 
 function parseRequestBody(body) {
+      if (!body) return {};
       if (Buffer.isBuffer(body)) body = body.toString('utf8');
-      if (typeof body === 'string') return JSON.parse(body);
-      return body && typeof body === 'object' ? body : {};
+      if (typeof body === 'string') {
+            const trimmed = body.trim();
+            if (!trimmed) return {};
+            return JSON.parse(trimmed);
+      }
+      return typeof body === 'object' ? body : {};
 }
 
 module.exports = { MAX_BODY_BYTES, getResendConfiguration, parseRequestBody, sendContactEmail, validateContactForm };

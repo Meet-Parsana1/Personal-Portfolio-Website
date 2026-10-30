@@ -1,22 +1,27 @@
 # Contact form setup
 
-The contact form sends `POST /api/submit` to a server-side handler. The browser never receives the Resend API key.
+The contact form sends `POST /api/submit` to a server-side handler (Node.js locally, and Vercel Serverless Function in production). The browser never receives or exposes the Resend API key.
 
 ## Local development
 
 1. Copy `.env.example` to `.env` and supply `RESEND_API_KEY` and `RECEIVER_EMAIL`.
-2. For local testing without a domain, omit `RESEND_FROM_EMAIL`. The server uses Resend's onboarding sender automatically. Set `RECEIVER_EMAIL` to the address that owns the Resend account; this testing sender cannot deliver to arbitrary recipients.
-3. For production, add `RESEND_FROM_EMAIL` with a domain verified in Resend. The Resend onboarding sender is only suitable for restricted testing and should not be used for public delivery.
-4. Run `npm run serve` and open `http://localhost:3000`.
-
-Do not use Live Server on port 5500 to test sends: it only serves static files and cannot run `/api/submit`.
+2. For testing without a verified custom domain, you can omit `RESEND_FROM_EMAIL` (it automatically defaults to `Portfolio Contact <onboarding@resend.dev>`). Make sure `RECEIVER_EMAIL` matches the email address that registered the Resend account.
+3. Start the backend server by running:
+   ```bash
+   npm run serve
+   # or
+   npm start
+   ```
+4. Open `http://localhost:3000` (or if previewing via VS Code Live Server on port 5500, keep `npm run serve` running in the terminal — requests will automatically route to the local server via CORS).
 
 ## Vercel deployment
 
-Deploy this repository as a Vercel project. The `api/submit.js` file is deployed as the `/api/submit` serverless function. Add these Environment Variables in the Vercel project for Production, Preview, and Development:
+Deploy this repository to Vercel. 
 
-- `RESEND_API_KEY`
-- `RECEIVER_EMAIL`
-- `RESEND_FROM_EMAIL`
+- If your project root in Vercel is set to `portfolio`, `portfolio/api/submit.js` serves as `/api/submit`.
+- Add these Environment Variables in your Vercel Project Settings (**Settings → Environment Variables**):
+  - `RESEND_API_KEY` (Required): Your Resend API key.
+  - `RECEIVER_EMAIL` (Required): The email where you want to receive messages.
+  - `RESEND_FROM_EMAIL` (Optional): A sender from your verified domain (e.g. `Portfolio Contact <contact@yourdomain.com>`). If omitted, it falls back safely to Resend's onboarding sender.
 
-After changing environment variables, redeploy the project. Keep the site and API on the same Vercel project/domain so the browser can call `/api/submit` without exposing credentials or requiring CORS.
+After updating environment variables in Vercel, redeploy the project for the changes to take effect.

@@ -26,11 +26,18 @@ function loadEnvironment() {
       }
 }
 
+function setCorsHeaders(response) {
+      response.setHeader('Access-Control-Allow-Origin', '*');
+      response.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+      response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
+}
+
 function json(response, statusCode, data) {
       response.writeHead(statusCode, {
             'Content-Type': 'application/json; charset=utf-8',
             'Cache-Control': 'no-store',
             'X-Content-Type-Options': 'nosniff',
+            'Access-Control-Allow-Origin': '*',
       });
       response.end(JSON.stringify(data));
 }
@@ -65,8 +72,16 @@ loadEnvironment();
 http.createServer((request, response) => {
       const requestPath = request.url.split('?')[0];
       if (requestPath === '/api/submit') {
+            setCorsHeaders(response);
+
+            if (request.method === 'OPTIONS') {
+                  response.writeHead(204);
+                  response.end();
+                  return;
+            }
+
             if (request.method !== 'POST') {
-                  response.setHeader('Allow', 'POST');
+                  response.setHeader('Allow', 'POST, OPTIONS');
                   return json(response, 405, { message: 'Method Not Allowed' });
             }
 
@@ -93,7 +108,7 @@ http.createServer((request, response) => {
                                     statusCode === 400
                                           ? 'Invalid request body.'
                                           : isLocalDevelopment
-                                            ? 'Resend could not send this test email. Check the terminal for the exact Resend error.'
+                                            ? `Resend error: ${error.message}`
                                             : 'Unable to send the message.',
                         });
                   }
