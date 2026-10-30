@@ -472,12 +472,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeResumeBtn = document.getElementById('closeResumeBtn');
     const footerResumeBtn = document.getElementById('footerResumeBtn');
     const resumeIframe = document.getElementById('resumeIframe');
+    const resumeLoader = document.getElementById('resumeLoader');
+    const resumeModalBackdrop = document.getElementById('resumeModalBackdrop');
 
     if (resumeModal && closeResumeBtn) {
         const openModal = (e) => {
             if (e) e.preventDefault();
             if (resumeIframe && !resumeIframe.getAttribute('src') && resumeIframe.dataset.src) {
                 resumeIframe.src = resumeIframe.dataset.src;
+
+                // Show loader until iframe is ready
+                if (resumeLoader) {
+                    resumeLoader.classList.remove('hidden');
+                    resumeIframe.style.opacity = '0';
+                }
+
+                const onIframeLoad = () => {
+                    if (resumeLoader) resumeLoader.classList.add('hidden');
+                    resumeIframe.style.opacity = '1';
+                    resumeIframe.removeEventListener('load', onIframeLoad);
+                };
+                resumeIframe.addEventListener('load', onIframeLoad);
             }
             resumeModal.classList.add('show');
             document.body.style.overflow = 'hidden';
@@ -494,6 +509,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (footerResumeBtn) footerResumeBtn.addEventListener('click', openModal);
         closeResumeBtn.addEventListener('click', closeModal);
 
+        // Close on backdrop click (new backdrop element, or the modal overlay itself)
+        if (resumeModalBackdrop) {
+            resumeModalBackdrop.addEventListener('click', closeModal);
+        }
         resumeModal.addEventListener('click', (e) => {
             if (e.target === resumeModal) {
                 closeModal();

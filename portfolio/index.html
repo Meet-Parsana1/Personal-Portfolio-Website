@@ -781,31 +781,68 @@
       </button>
 
       <div id="resumeModal" class="resume-modal" role="dialog" aria-modal="true" aria-labelledby="resumeTitle">
-            <div class="resume-modal-content glass-card">
-                  <span class="close-modal" id="closeResumeBtn" aria-label="Close Resume Modal">&times;</span>
-                  <div class="resume-modal-header">
-                        <h2 id="resumeTitle">
-                              My Resume - <span class="purple-text">On Paper!</span>
-                        </h2>
-                        <div class="resume-modal-actions">
+            <div class="resume-modal-backdrop" id="resumeModalBackdrop" aria-hidden="true"></div>
+            <div class="resume-modal-content">
+
+                  <!-- ── Top bar ── -->
+                  <div class="rmc-topbar">
+                        <div class="rmc-title-group">
+                              <div class="rmc-doc-icon" aria-hidden="true">
+                                    <i class="fa-solid fa-file-lines"></i>
+                              </div>
+                              <span id="resumeTitle" class="rmc-title">MEETZ RESUME</span>
+                        </div>
+                        <div class="rmc-actions">
                               <a href="https://drive.google.com/file/d/1SOv1T2H3UToDvL3g3Fss-FRgv_0tpWYU/view?usp=sharing"
-                                    target="_blank" rel="noopener noreferrer" class="resume-action-btn"
-                                    aria-label="Open Resume in New Tab">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    <span>View Full</span>
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="rmc-btn rmc-btn--ghost"
+                                    aria-label="Open resume in new tab">
+                                    <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                                    <span>Open</span>
                               </a>
                               <a href="https://drive.google.com/uc?export=download&id=1SOv1T2H3UToDvL3g3Fss-FRgv_0tpWYU"
-                                    class="resume-action-btn" aria-label="Download Resume PDF">
-                                    <i class="fa-solid fa-download"></i>
-                                    <span>Download</span>
+                                    class="rmc-btn rmc-btn--primary"
+                                    aria-label="Download resume as PDF">
+                                    <i class="fa-solid fa-download" aria-hidden="true"></i>
+                                    <span>Download PDF</span>
                               </a>
+                              <button class="rmc-close-btn" id="closeResumeBtn" aria-label="Close resume">
+                                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                              </button>
                         </div>
                   </div>
-                  <div class="resume-iframe-container">
+
+                  <!-- ── Viewer area ── -->
+                  <div class="rmc-viewer">
+                        <!-- Loading overlay shown while iframe loads -->
+                        <div class="rmc-loader" id="resumeLoader" aria-hidden="true">
+                              <div class="rmc-loader-ring">
+                                    <div class="rmc-loader-spinner"></div>
+                              </div>
+                              <span>Loading resume…</span>
+                        </div>
+                        <!-- Overlay to block Google Drive's own "open in new tab" button -->
+                        <div class="rmc-gdrive-block" aria-hidden="true"></div>
                         <iframe id="resumeIframe"
                               data-src="https://drive.google.com/file/d/1SOv1T2H3UToDvL3g3Fss-FRgv_0tpWYU/preview"
-                              width="100%" height="100%" title="Meet Parsana Resume" style="border: none"></iframe>
+                              width="100%" height="100%"
+                              title="Meet Parsana Resume"
+                              allow="autoplay"
+                              style="border: none; opacity: 0; transition: opacity 0.45s ease;"></iframe>
                   </div>
+
+                  <!-- ── Bottom status bar ── -->
+                  <div class="rmc-footer">
+                        <span class="rmc-footer-hint">
+                              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                              Scroll inside the preview to read all pages
+                        </span>
+                        <div class="rmc-footer-badges">
+                              <span class="rmc-badge"><i class="fa-solid fa-lock" aria-hidden="true"></i> Secured</span>
+                              <span class="rmc-badge"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> PDF</span>
+                        </div>
+                  </div>
+
             </div>
       </div>
 
