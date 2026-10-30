@@ -8,7 +8,7 @@ I'm a final-year B.Sc. IT (FinTech) student passionate about web development, in
 
 This portfolio brings together my work, technical interests, and learning journey in one place. It's more than just a website—it's a reflection of what I'm learning, what I'm building, and where I want to go as a developer.
 
-**Live Portfolio:** [Visit My Portfolio](YOUR_PORTFOLIO_URL)
+**Live Portfolio:** [Visit My Portfolio]( https://personal-portfolio-website-nine-silk.vercel.app/)
 
 ---
 
@@ -69,13 +69,13 @@ You'll need:
 **1. Clone the repository**
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/Meet-Parsana1/Personal-Portfolio-Website
 ```
 
 **2. Navigate to the project directory**
 
 ```bash
-cd YOUR_REPOSITORY_NAME
+cd Personal-Portfolio-Website
 ```
 
 **3. Open the project**
@@ -146,10 +146,10 @@ I'm always interested in learning from other developers, exchanging ideas, explo
 
 If something here interests you, feel free to connect!
 
-- **Portfolio:** [Explore My Work](YOUR_PORTFOLIO_URL)
-- **GitHub:** [View My Repositories](YOUR_GITHUB_PROFILE_URL)
-- **LinkedIn:** [Connect With Me](YOUR_LINKEDIN_URL)
-- **Email:** YOUR_EMAIL_ADDRESS
+- **Portfolio:** [Explore My Work]( https://personal-portfolio-website-nine-silk.vercel.app/)
+- **GitHub:** [View My Repositories](https://github.com/Meet-Parsana1)
+- **LinkedIn:** [Connect With Me](https://www.linkedin.com/in/meet-parsana/)
+- **Email:** meetparsana0a@gmail.com
 
 ---
 
